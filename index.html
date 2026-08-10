@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="PlayVerse Games - Games, tournaments and competitive challenges.">
+<link rel="manifest" href="manifest.json">
+
+<title>PlayVerse Games</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0a0a0a;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    background:#101010;
+    border-bottom:1px solid #222;
+    padding:16px 20px;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.header-inner{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    color:#00ff88;
+    font-size:24px;
+    font-weight:800;
+}
+
+.account-btn{
+    text-decoration:none;
+    color:#fff;
+    background:#191919;
+    border:1px solid #292929;
+    padding:9px 14px;
+    border-radius:9px;
+    font-size:14px;
+}
+
+.account-btn:hover{
+    border-color:#00ff88;
+}
+
+nav{
+    background:#111;
+    border-bottom:1px solid #222;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.nav-inner{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    padding:14px 18px;
+    font-size:14px;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff88;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#151515,#0d1b14);
+    border:1px solid #26352d;
+    border-radius:20px;
+    padding:35px 25px;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.hero h1 span{
+    color:#00ff88;
+}
+
+.hero p{
+    color:#aaa;
+    line-height:1.6;
+    max-width:650px;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:22px;
+}
+
+.btn{
+    display:inline-block;
+    text-decoration:none;
+    border-radius:10px;
+    padding:13px 18px;
+    font-weight:700;
+}
+
+.btn-primary{
+    background:#00ff88;
+    color:#06100b;
+}
+
+.btn-secondary{
+    background:#1b1b1b;
+    color:#fff;
+    border:1px solid #303030;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:25px 0 14px;
+}
+
+.section-title h2{
+    font-size:21px;
+}
+
+.section-title a{
+    color:#00ff88;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.card{
+    background:#121212;
+    border:1px solid #242424;
+    border-radius:16px;
+    padding:20px;
+}
+
+.card:hover{
+    border-color:#00ff88;
+}
+
+.tournament-card{
+    position:relative;
+    overflow:hidden;
+}
+
+.badge{
+    display:inline-block;
+    background:#00ff88;
+    color:#06100b;
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom:13px;
+}
+
+.badge.gold{
+    background:#ffd54a;
+}
+
+.badge.fast{
+    background:#ff9f43;
+}
+
+.card h3{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#999;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.card-info{
+    margin:16px 0;
+}
+
+.card-info div{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    border-bottom:1px solid #202020;
+    font-size:13px;
+}
+
+.card-info span:last-child{
+    color:#00ff88;
+    font-weight:bold;
+}
+
+.play-btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    color:#06100b;
+    background:#00ff88;
+    padding:11px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.game-card{
+    min-height:150px;
+}
+
+.game-icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    background:#1c1c1c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    margin-bottom:12px;
+}
+
+.game-card h3{
+    margin-bottom:5px;
+}
+
+.game-card p{
+    font-size:13px;
+}
+
+.notice{
+    margin-top:22px;
+    background:#111;
+    border:1px solid #252525;
+    border-radius:14px;
+    padding:17px;
+    color:#999;
+    font-size:13px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    border-top:1px solid #222;
+    background:#101010;
+    padding:25px 20px;
+    text-align:center;
+    color:#777;
+    font-size:13px;
+}
+
+@media(max-width:800px){
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+}
+
+@media(min-width:801px){
+    .cards.three{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">PLAYVERSE</div>
+        <a class="account-btn" href="account.html">Account</a>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="active">Home</a>
+        <a href="games.html">Games</a>
+        <a href="trading.html">Prediction</a>
+        <a href="tournament.html">Tournaments</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>Welcome to <span>PlayVerse</span></h1>
+        <p>
+            Play competitive games, join tournaments and compete
+            on live leaderboards. Start with demo gameplay and
+            follow your tournament progress in real time.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="games.html" class="btn btn-primary">Play Games</a>
+            <a href="tournament.html" class="btn btn-secondary">View Tournaments</a>
+        </div>
+    </section>
+
+
+    <div class="section-title">
+        <h2>🔥 Active Tournaments</h2>
+        <a href="tournament.html">View all</a>
+    </div>
+
+    <section class="cards">
+
+        <div class="card tournament-card">
+            <span class="badge">4 DAYS</span>
+            <h3>$2 Tournament</h3>
+            <p>
+                Compete using your tournament demo balance.
+            </p>
+
+            <div class="card-info">
+                <div>
+                    <span>Entry</span>
+                    <span>$2</span>
+                </div>
+
+                <div>
+                    <span>Duration</span>
+                    <span>4 Days</span>
+                </div>
+
+                <div>
+                    <span>Ranking</span>
+                    <span>Highest Balance</span>
+                </div>
+            </div>
+
+            <a href="tournament.html" class="play-btn">
+                Enter Tournament
+            </a>
+        </div>
+
+
+        <div class="card tournament-card">
+            <span class="badge gold">3 DAYS</span>
+            <h3>$10 Challenge</h3>
+            <p>
+                Reach the exact target before the tournament ends.
+            </p>
+
+            <div class="card-info">
+                <div>
+                    <span>Entry</span>
+                    <span>$10</span>
+                </div>
+
+                <div>
+                    <span>Duration</span>
+                    <span>3 Days</span>
+                </div>
+
+                <div>
+                    <span>Win Rule</span>
+                    <span>Exact Target</span>
+                </div>
+            </div>
+
+            <a href="tournament.html" class="play-btn">
+                View Challenge
+            </a>
+        </div>
+
+
+        <div class="card tournament-card">
+            <span class="badge fast">24 HOURS</span>
+            <h3>$15 Fast Challenge</h3>
+            <p>
+                A fast competition with an exact target.
+            </p>
+
+            <div class="card-info">
+                <div>
+                    <span>Entry</span>
+                    <span>$15</span>
+                </div>
+
+                <div>
+                    <span>Duration</span>
+                    <span>24 Hours</span>
+                </div>
+
+                <div>
+                    <span>Win Rule</span>
+                    <span>Exact Target</span>
+                </div>
+            </div>
+
+            <a href="tournament.html" class="play-btn">
+                View Challenge
+            </a>
+        </div>
+
+    </section>
+
+
+    <div class="section-title">
+        <h2>🎮 Games</h2>
+        <a href="games.html">View all games</a>
+    </div>
+
+    <section class="cards three">
+
+        <div class="card game-card">
+            <div class="game-icon">✈️</div>
+            <h3>Aviator</h3>
+            <p>Watch the multiplier rise and play the demo game.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🎯</div>
+            <h3>Target</h3>
+            <p>Test your timing and compete for a higher score.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🎲</div>
+            <h3>Dice</h3>
+            <p>A simple competitive demo dice game.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🏎️</div>
+            <h3>Racing</h3>
+            <p>Compete in a fast demo racing challenge.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🃏</div>
+            <h3>Cards</h3>
+            <p>Play a quick card-based demo challenge.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">⚡</div>
+            <h3>Quick Win</h3>
+            <p>A fast and simple competitive game.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🏆</div>
+            <h3>Challenge</h3>
+            <p>Complete challenges and improve your ranking.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🚀</div>
+            <h3>Rocket</h3>
+            <p>A fast demo multiplier-style game.</p>
+        </div>
+
+        <div class="card game-card">
+            <div class="game-icon">🎮</div>
+            <h3>Arcade</h3>
+            <p>More competitive demo gameplay coming soon.</p>
+        </div>
+
+    </section>
+
+
+    <div class="section-title">
+        <h2>📈 Prediction</h2>
+        <a href="trading.html">Open</a>
+    </div>
+
+    <section class="card">
+        <h3>Prediction Trading</h3>
+        <p>
+            Enter the prediction section and use your tournament
+            demo balance to compete.
+        </p>
+
+        <div style="margin-top:16px;">
+            <a href="trading.html" class="play-btn">
+                Open Prediction
+            </a>
+        </div>
+    </section>
+
+
+    <div class="notice">
+        <strong>Demo Balance</strong><br><br>
+        Tournament balances are demo credits. Tournament entry,
+        payment verification and any real-money prize processing
+        must be handled through the approved secure payment system
+        and backend.
+    </div>
+
+</main>
+
+
+<footer>
+    PlayVerse Games © 2026<br><br>
+    Competitive gaming platform
+</footer>
+
+</body>
+  </html>

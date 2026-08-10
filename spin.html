@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,96 +9,198 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
 margin:0;
-font-family:Arial,sans-serif;
-background:#080b18;
+background:#050814;
 color:white;
 text-align:center;
 }
 
+
 header{
-background:#11162b;
-padding:20px;
+background:#10162d;
+padding:18px;
 color:#00eaff;
-font-size:24px;
+font-size:25px;
 font-weight:bold;
 }
 
+
+.game{
+max-width:600px;
+margin:auto;
+padding:20px;
+}
+
+
+.panel{
+background:#10162d;
+border:1px solid #263056;
+border-radius:18px;
+padding:18px;
+margin-bottom:18px;
+}
+
+
+.wheelBox{
+display:flex;
+justify-content:center;
+align-items:center;
+height:330px;
+}
+
+
 .wheel{
-width:220px;
-height:220px;
+
+width:260px;
+height:260px;
 border-radius:50%;
+
 background:conic-gradient(
-#00eaff 0deg 60deg,
-#ff4444 60deg 120deg,
-#333 120deg 180deg,
-#00eaff 180deg 240deg,
-#ff4444 240deg 300deg,
-#333 300deg 360deg
+#00eaff 0deg 40deg,
+#ff1744 40deg 80deg,
+#00eaff 80deg 120deg,
+#ff1744 120deg 160deg,
+#00eaff 160deg 200deg,
+#ffd600 200deg 240deg,
+#ff1744 240deg 280deg,
+#ff1744 280deg 320deg,
+#00eaff 320deg 360deg
 );
-margin:40px auto;
+
+border:8px solid #263056;
+
+transition:4s;
+
+position:relative;
+
+}
+
+
+.labels{
+
+position:absolute;
+width:100%;
+height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:50px;
-transition:2s;
+font-size:20px;
+font-weight:bold;
+
 }
 
+
 button{
+
 background:#00eaff;
-border:none;
+border:0;
 padding:15px 35px;
-border-radius:25px;
+border-radius:12px;
 font-size:18px;
 font-weight:bold;
 }
 
+
 .result{
-margin-top:25px;
-font-size:22px;
+
+font-size:24px;
 color:#00eaff;
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 🎡 PlayVerse Spin
 </header>
 
 
-<h2>Hard Spin Challenge</h2>
+<div class="game">
 
-<p>Spin and test your luck.</p>
 
+<div class="panel">
+
+<h2>Spin Challenge</h2>
+
+<p>
+x2 x0 x4 x0 x6 x10 x0 x0 x15
+</p>
+
+</div>
+
+
+
+<div class="panel wheelBox">
 
 <div class="wheel" id="wheel">
+
+<div class="labels">
 🎡
 </div>
 
+</div>
+
+</div>
+
+
+
+<div class="panel">
 
 <button onclick="spin()">
 SPIN
 </button>
 
-
-<div class="result" id="result">
-Ready?
 </div>
+
+
+
+<div class="panel result" id="result">
+Ready
+</div>
+
+
+</div>
+
+
 
 
 <script>
 
+
 let spinning=false;
+
+
+let rewards=[
+"x2",
+"x0",
+"x4",
+"x0",
+"x6",
+"x10",
+"x0",
+"x0",
+"x15"
+];
+
 
 
 function spin(){
 
+
 if(spinning)return;
+
 
 spinning=true;
 
@@ -105,28 +208,43 @@ spinning=true;
 let wheel=document.getElementById("wheel");
 
 
-let rotate=Math.floor(Math.random()*3600)+720;
+let index=Math.floor(Math.random()*rewards.length);
+
+
+let section=360/rewards.length;
+
+
+let rotate=
+(360*5)+
+(index*section)+
+(section/2);
+
 
 
 wheel.style.transform=
 "rotate("+rotate+"deg)";
 
 
+
 setTimeout(()=>{
 
 
-let result=Math.random();
+let reward=rewards[index];
 
 
-if(result>0.65){
+if(reward==="x0"){
+
 
 document.getElementById("result").innerHTML=
-"🏆 You Win!";
+"❌ You got x0 - Lose";
+
 
 }else{
 
+
 document.getElementById("result").innerHTML=
-"❌ You Lose.";
+"🏆 You got "+reward;
+
 
 }
 
@@ -134,10 +252,11 @@ document.getElementById("result").innerHTML=
 spinning=false;
 
 
-},2000);
+},4000);
 
 
 }
+
 
 </script>
 

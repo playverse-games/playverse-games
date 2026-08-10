@@ -3,728 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
-<title>PlayVerse Games - Prediction</title>
+
+<title>PlayVerse Trading Prediction</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0a0a0a;
-    color:#fff;
-    min-height:100vh;
+margin:0;
+font-family:Arial,sans-serif;
+background:#080b18;
+color:white;
+text-align:center;
 }
 
 header{
-    background:#101010;
-    border-bottom:1px solid #222;
-    padding:16px 20px;
-}
-
-.header-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    color:#00ff88;
-    font-size:24px;
-    font-weight:800;
-}
-
-.account{
-    color:#fff;
-    text-decoration:none;
-    background:#191919;
-    border:1px solid #292929;
-    padding:9px 14px;
-    border-radius:9px;
-    font-size:14px;
-}
-
-nav{
-    background:#111;
-    border-bottom:1px solid #222;
-    overflow-x:auto;
-    white-space:nowrap;
-}
-
-.nav-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-}
-
-nav a{
-    color:#aaa;
-    text-decoration:none;
-    padding:14px 18px;
-    font-size:14px;
-}
-
-nav a:hover,
-nav a.active{
-    color:#00ff88;
-}
-
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:20px;
-}
-
-.title{
-    margin:10px 0 20px;
-}
-
-.title h1{
-    font-size:30px;
-    margin-bottom:7px;
-}
-
-.title p{
-    color:#888;
-    line-height:1.5;
-}
-
-.status{
-    background:#121212;
-    border:1px solid #292929;
-    border-radius:15px;
-    padding:16px;
-    margin-bottom:16px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.balance-label{
-    color:#777;
-    font-size:12px;
-    margin-bottom:5px;
-}
-
-.balance{
-    color:#00ff88;
-    font-size:25px;
-    font-weight:800;
-}
-
-.locked{
-    color:#ffc857;
-    font-size:12px;
-    font-weight:bold;
+background:#11162b;
+padding:20px;
+color:#00eaff;
+font-size:24px;
+font-weight:bold;
 }
 
 .market{
-    background:#121212;
-    border:1px solid #292929;
-    border-radius:18px;
-    overflow:hidden;
-}
-
-.market-head{
-    padding:18px;
-    border-bottom:1px solid #242424;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.asset{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.coin{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:#1d1d1d;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#00ff88;
-    font-weight:800;
-}
-
-.asset h2{
-    font-size:18px;
-}
-
-.asset span{
-    color:#777;
-    font-size:12px;
+margin:30px auto;
+font-size:45px;
+color:#00eaff;
 }
 
 .price{
-    text-align:right;
+font-size:35px;
+margin:20px;
 }
 
-.price strong{
-    font-size:20px;
+button{
+background:#00eaff;
+border:none;
+padding:15px 30px;
+border-radius:25px;
+font-size:18px;
+font-weight:bold;
+margin:10px;
 }
 
-.price small{
-    display:block;
-    color:#00ff88;
-    margin-top:4px;
+.result{
+font-size:22px;
+margin-top:25px;
 }
 
-.chart{
-    height:260px;
-    padding:15px;
-    background:#0d0d0d;
-}
-
-canvas{
-    width:100%;
-    height:100%;
-    display:block;
-}
-
-.trade-panel{
-    padding:18px;
-}
-
-.trade-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.trade-card{
-    background:#191919;
-    border:1px solid #292929;
-    border-radius:13px;
-    padding:16px;
-}
-
-.trade-card h3{
-    margin-bottom:7px;
-}
-
-.trade-card p{
-    color:#888;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.input{
-    width:100%;
-    margin-top:13px;
-    padding:12px;
-    border:1px solid #303030;
-    background:#0d0d0d;
-    color:#fff;
-    border-radius:8px;
-    outline:none;
-}
-
-.input:focus{
-    border-color:#00ff88;
-}
-
-.btn{
-    width:100%;
-    border:0;
-    padding:12px;
-    margin-top:10px;
-    border-radius:9px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.buy{
-    background:#00ff88;
-    color:#06100b;
-}
-
-.sell{
-    background:#ff4d5a;
-    color:#fff;
-}
-
-.lock-message{
-    margin-top:16px;
-    padding:13px;
-    border-radius:9px;
-    background:#17120b;
-    border:1px solid #4d3b19;
-    color:#ffc857;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.section{
-    margin-top:18px;
-    background:#121212;
-    border:1px solid #292929;
-    border-radius:15px;
-    padding:18px;
-}
-
-.section h2{
-    font-size:18px;
-    margin-bottom:15px;
-}
-
-.empty{
-    color:#666;
-    font-size:13px;
-}
-
-.notice{
-    margin-top:18px;
-    color:#777;
-    font-size:12px;
-    line-height:1.5;
-}
-
-footer{
-    margin-top:30px;
-    padding:25px;
-    text-align:center;
-    border-top:1px solid #222;
-    background:#101010;
-    color:#777;
-    font-size:13px;
-}
-
-@media(max-width:650px){
-    .trade-grid{
-        grid-template-columns:1fr;
-    }
-
-    .chart{
-        height:220px;
-    }
-
-    .status{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">PLAYVERSE</div>
-        <a href="account.html" class="account">Account</a>
-    </div>
+📈 PlayVerse Trading Prediction
 </header>
 
-<nav>
-    <div class="nav-inner">
-        <a href="index.html">Home</a>
-        <a href="games.html">Games</a>
-        <a href="trading.html" class="active">Prediction</a>
-        <a href="tournament.html">Tournaments</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="account.html">Account</a>
-    </div>
-</nav>
 
-<main class="container">
-
-    <section class="title">
-        <h1>📈 Prediction Trading</h1>
-        <p>
-            Use your verified tournament demo balance for
-            prediction practice.
-        </p>
-    </section>
-
-    <section class="status">
-
-        <div>
-            <div class="balance-label">
-                Tournament Demo Balance
-            </div>
-
-            <div class="balance" id="balance">
-                $0.00
-            </div>
-        </div>
-
-        <div class="locked" id="paymentStatus">
-            PAYMENT NOT CONFIRMED
-        </div>
-
-    </section>
+<h2>Market Challenge</h2>
 
 
-    <section class="market">
-
-        <div class="market-head">
-
-            <div class="asset">
-                <div class="coin">BTC</div>
-
-                <div>
-                    <h2>Bitcoin</h2>
-                    <span>BTC / USD</span>
-                </div>
-            </div>
-
-            <div class="price">
-                <strong id="price">$0.00</strong>
-                <small id="change">Demo Market</small>
-            </div>
-
-        </div>
+<div class="market">
+📊
+</div>
 
 
-        <div class="chart">
-            <canvas id="chart"></canvas>
-        </div>
+<div class="price">
+Price: $<span id="price">100</span>
+</div>
 
 
-        <div class="trade-panel">
-
-            <div class="trade-grid">
-
-                <div class="trade-card">
-
-                    <h3>📈 Predict UP</h3>
-
-                    <p>
-                        Predict that the next market movement
-                        will be higher.
-                    </p>
-
-                    <input
-                        id="upAmount"
-                        class="input"
-                        type="number"
-                        min="1"
-                        step="0.01"
-                        placeholder="Demo amount"
-                    >
-
-                    <button
-                        class="btn buy"
-                        onclick="placePrediction('UP')"
-                    >
-                        PREDICT UP
-                    </button>
-
-                </div>
+<button onclick="predict('up')">
+📈 UP
+</button>
 
 
-                <div class="trade-card">
-
-                    <h3>📉 Predict DOWN</h3>
-
-                    <p>
-                        Predict that the next market movement
-                        will be lower.
-                    </p>
-
-                    <input
-                        id="downAmount"
-                        class="input"
-                        type="number"
-                        min="1"
-                        step="0.01"
-                        placeholder="Demo amount"
-                    >
-
-                    <button
-                        class="btn sell"
-                        onclick="placePrediction('DOWN')"
-                    >
-                        PREDICT DOWN
-                    </button>
-
-                </div>
-
-            </div>
+<button onclick="predict('down')">
+📉 DOWN
+</button>
 
 
-            <div class="lock-message">
-                <strong>PAYMENT NOT CONFIRMED</strong><br>
-                Trading is locked until your tournament entry
-                is verified by the secure backend.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="section">
-
-        <h2>📂 Open Predictions</h2>
-
-        <div id="openTrades" class="empty">
-            No open predictions.
-        </div>
-
-    </section>
-
-
-    <section class="section">
-
-        <h2>📋 Prediction History</h2>
-
-        <div id="history" class="empty">
-            No prediction history.
-        </div>
-
-    </section>
-
-
-    <p class="notice">
-        This page is a demo frontend. It does not confirm payments,
-        unlock balances, or process real-money trades. Production
-        tournament balances and transaction results must be controlled
-        by a secure backend.
-    </p>
-
-</main>
-
-
-<footer>
-    PlayVerse Games © 2026
-</footer>
+<div class="result" id="result">
+Make your prediction
+</div>
 
 
 <script>
 
-/*
-    PREDICTION PAGE
-
-    This is demo UI only.
-
-    A production version must receive the authenticated player's
-    verified tournament balance from the backend.
-
-    Never put payment-provider secret keys in frontend JavaScript.
-*/
+let price=100;
 
 
-const canvas =
-    document.getElementById("chart");
-
-const ctx =
-    canvas.getContext("2d");
-
-let chartData = [];
-
-let currentPrice = 65000;
+function predict(choice){
 
 
-function resizeCanvas(){
-
-    const rect =
-        canvas.getBoundingClientRect();
-
-    const ratio =
-        window.devicePixelRatio || 1;
-
-    canvas.width =
-        rect.width * ratio;
-
-    canvas.height =
-        rect.height * ratio;
-
-    ctx.setTransform(
-        ratio,
-        0,
-        0,
-        ratio,
-        0,
-        0
-    );
-
-    drawChart();
-}
+let movement=Math.random()>0.5 ? "up":"down";
 
 
-function createChartData(){
+if(movement==="up"){
 
-    chartData = [];
+price+=Math.floor(Math.random()*10)+1;
 
-    let value = currentPrice;
+}else{
 
-    for(let i = 0; i < 70; i++){
-
-        value +=
-            (Math.random() - 0.48) * 350;
-
-        if(value < 1000){
-            value = 1000;
-        }
-
-        chartData.push(value);
-    }
-}
-
-
-function drawChart(){
-
-    const width =
-        canvas.clientWidth;
-
-    const height =
-        canvas.clientHeight;
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-    if(chartData.length < 2){
-        return;
-    }
-
-    const min =
-        Math.min(...chartData);
-
-    const max =
-        Math.max(...chartData);
-
-    const range =
-        max - min || 1;
-
-    ctx.beginPath();
-
-    chartData.forEach((value,index) => {
-
-        const x =
-            (index / (chartData.length - 1))
-            * width;
-
-        const y =
-            height -
-            ((value - min) / range)
-            * (height - 25) -
-            10;
-
-        if(index === 0){
-            ctx.moveTo(x,y);
-        }else{
-            ctx.lineTo(x,y);
-        }
-
-    });
-
-    ctx.strokeStyle =
-        "#00ff88";
-
-    ctx.lineWidth = 2;
-
-    ctx.stroke();
-
-    const last =
-        chartData[chartData.length - 1];
-
-    currentPrice =
-        last;
-
-    document.getElementById("price").textContent =
-        "$" +
-        currentPrice.toLocaleString(
-            "en-US",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        );
+price-=Math.floor(Math.random()*10)+1;
 
 }
 
 
-function updateMarket(){
+document.getElementById("price").innerHTML=price;
 
-    const last =
-        chartData[chartData.length - 1] ||
-        currentPrice;
 
-    const movement =
-        (Math.random() - 0.5) * 250;
+if(choice===movement){
 
-    chartData.push(
-        Math.max(1000,last + movement)
-    );
+document.getElementById("result").innerHTML=
+"🏆 Correct Prediction!";
 
-    if(chartData.length > 70){
-        chartData.shift();
-    }
+}else{
 
-    drawChart();
+document.getElementById("result").innerHTML=
+"❌ Wrong Prediction.";
 
 }
 
 
-function placePrediction(direction){
-
-    /*
-       Intentionally locked.
-
-       Do not modify this function to credit or deduct money
-       from localStorage.
-
-       Production flow should be:
-
-       frontend → authenticated backend →
-       verified tournament balance →
-       server-side prediction result.
-    */
-
-    alert(
-        "Prediction is locked. Your tournament payment must be verified before demo trading is activated."
-    );
-
 }
-
-
-function loadAccountState(){
-
-    document.getElementById("balance").textContent =
-        "$0.00";
-
-    document.getElementById("paymentStatus").textContent =
-        "PAYMENT NOT CONFIRMED";
-
-    document.getElementById("openTrades").textContent =
-        "No open predictions.";
-
-    document.getElementById("history").textContent =
-        "No prediction history.";
-
-}
-
-
-createChartData();
-
-resizeCanvas();
-
-loadAccountState();
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-setInterval(
-    updateMarket,
-    1200
-);
 
 </script>
 
+
 </body>
-  </html>
+</html>

@@ -7,61 +7,125 @@
 <title>PlayVerse Memory</title>
 
 <style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#080b18;
-color:white;
-text-align:center;
+    margin:0;
+    background:#050814;
+    color:white;
 }
 
 header{
-background:#11162b;
-padding:20px;
-color:#00eaff;
-font-size:24px;
-font-weight:bold;
+    background:#10162d;
+    padding:18px;
+    text-align:center;
+    color:#00eaff;
+    font-size:25px;
+    font-weight:bold;
+    border-bottom:1px solid #263056;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(4,70px);
-gap:10px;
-justify-content:center;
-margin:25px auto;
+.game{
+    max-width:600px;
+    margin:auto;
+    padding:18px;
+}
+
+.panel{
+    background:#10162d;
+    border:1px solid #263056;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    text-align:center;
+}
+
+.hud{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.stat{
+    background:#080d1d;
+    border-radius:10px;
+    padding:10px 5px;
+    font-size:13px;
+    color:#9da3bb;
+}
+
+.stat strong{
+    display:block;
+    color:#00eaff;
+    font-size:18px;
+    margin-top:4px;
+}
+
+.board{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    max-width:420px;
+    margin:auto;
 }
 
 .card{
-width:70px;
-height:70px;
-background:#252b50;
-border-radius:10px;
-font-size:35px;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
+    height:85px;
+    border:0;
+    border-radius:12px;
+    background:#18203d;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+    border:1px solid #2a3560;
+    transition:.2s;
 }
 
-.open{
-background:#00eaff;
+.card:hover{
+    border-color:#00eaff;
+    transform:translateY(-2px);
+}
+
+.card.flipped,
+.card.matched{
+    background:#0b3040;
+    border-color:#00eaff;
+}
+
+.card.matched{
+    opacity:.7;
 }
 
 button{
-background:#00eaff;
-border:none;
-padding:15px 35px;
-border-radius:25px;
-font-size:18px;
-font-weight:bold;
+    border:0;
+    border-radius:12px;
+    padding:14px 25px;
+    background:#00eaff;
+    color:#001016;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .result{
-margin-top:20px;
-color:#00eaff;
-font-size:22px;
+    min-height:28px;
+    font-size:20px;
+    color:#00eaff;
 }
 
+@media(max-width:420px){
+    .card{
+        height:72px;
+        font-size:24px;
+    }
+
+    .game{
+        padding:12px;
+    }
+}
 </style>
 </head>
 
@@ -71,149 +135,226 @@ font-size:22px;
 🧠 PlayVerse Memory
 </header>
 
-<h2>Hard Memory Challenge</h2>
+<div class="game">
 
-<p>Wrong match = Fail</p>
+    <div class="panel">
+        <h2>Hard Memory Challenge</h2>
+        <p>Match all pairs before your mistakes run out.</p>
+    </div>
 
-<div class="grid" id="grid"></div>
+    <div class="panel hud">
+        <div class="stat">
+            TIME
+            <strong id="time">30</strong>
+        </div>
 
-<button onclick="startGame()">START</button>
+        <div class="stat">
+            MISTAKES
+            <strong id="mistakes">0 / 5</strong>
+        </div>
 
-<div class="result" id="result">
-Remember the cards!
+        <div class="stat">
+            MATCHES
+            <strong id="matches">0 / 6</strong>
+        </div>
+    </div>
+
+    <div class="panel">
+
+        <div class="board" id="board"></div>
+
+    </div>
+
+    <div class="panel">
+
+        <button onclick="startGame()">
+            NEW ROUND
+        </button>
+
+        <div class="result" id="result">
+            Press NEW ROUND to start.
+        </div>
+
+    </div>
+
 </div>
-
 
 <script>
 
-let cards=[];
-let first=null;
-let second=null;
-let lock=false;
-let matched=0;
+const symbols = [
+    "⚡","🔥","💎","🚀","🎯","👑"
+];
 
+let deck = [];
+let firstCard = null;
+let secondCard = null;
+let locked = false;
+let mistakes = 0;
+let matches = 0;
+let time = 30;
+let timer = null;
+let gameActive = false;
+
+function shuffle(array){
+
+    for(let i=array.length-1;i>0;i--){
+
+        const j=Math.floor(Math.random()*(i+1));
+
+        [array[i],array[j]]=[array[j],array[i]];
+    }
+
+    return array;
+}
 
 function startGame(){
 
-let icons=[
-"🔥","🔥",
-"⭐","⭐",
-"🍀","🍀",
-"💎","💎",
-"⚡","⚡",
-"🎮","🎮",
-"🏆","🏆",
-"🚀","🚀"
-];
+    clearInterval(timer);
 
+    deck = shuffle([...symbols,...symbols]);
 
-cards=icons.sort(()=>Math.random()-0.5);
+    firstCard = null;
+    secondCard = null;
+    locked = false;
+    mistakes = 0;
+    matches = 0;
+    time = 30;
+    gameActive = true;
 
-let grid=document.getElementById("grid");
+    document.getElementById("mistakes").textContent =
+        "0 / 5";
 
-grid.innerHTML="";
+    document.getElementById("matches").textContent =
+        "0 / 6";
 
-matched=0;
+    document.getElementById("time").textContent =
+        time;
 
-cards.forEach(icon=>{
+    document.getElementById("result").textContent =
+        "Find the matching pairs.";
 
-let card=document.createElement("div");
+    const board = document.getElementById("board");
 
-card.className="card";
+    board.innerHTML = "";
 
-card.dataset.icon=icon;
+    deck.forEach((symbol,index)=>{
 
-card.innerHTML="❓";
+        const card = document.createElement("button");
 
-card.onclick=()=>flip(card);
+        card.className = "card";
 
-grid.appendChild(card);
+        card.dataset.index = index;
 
-});
+        card.dataset.symbol = symbol;
 
+        card.textContent = "❓";
 
-document.getElementById("result").innerHTML=
-"Game Started!";
+        card.onclick = () => flipCard(card);
 
+        board.appendChild(card);
+    });
+
+    timer = setInterval(()=>{
+
+        time--;
+
+        document.getElementById("time").textContent =
+            time;
+
+        if(time <= 0){
+
+            endGame("⏰ Time is up. You lose.");
+
+        }
+
+    },1000);
 }
 
+function flipCard(card){
 
+    if(!gameActive || locked) return;
 
-function flip(card){
+    if(card.classList.contains("flipped") ||
+       card.classList.contains("matched")) return;
 
-if(lock || card.innerHTML!=="❓") return;
+    card.classList.add("flipped");
 
+    card.textContent = card.dataset.symbol;
 
-card.innerHTML=card.dataset.icon;
+    if(!firstCard){
 
+        firstCard = card;
 
-if(!first){
+        return;
+    }
 
-first=card;
+    secondCard = card;
 
-}else{
+    locked = true;
 
-second=card;
+    if(firstCard.dataset.symbol ===
+       secondCard.dataset.symbol){
 
-check();
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
 
+        matches++;
+
+        document.getElementById("matches").textContent =
+            matches + " / 6";
+
+        firstCard = null;
+        secondCard = null;
+        locked = false;
+
+        if(matches === 6){
+
+            endGame("🏆 Perfect! You matched every pair.");
+        }
+
+    }else{
+
+        mistakes++;
+
+        document.getElementById("mistakes").textContent =
+            mistakes + " / 5";
+
+        setTimeout(()=>{
+
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+
+            firstCard.textContent = "❓";
+            secondCard.textContent = "❓";
+
+            firstCard = null;
+            secondCard = null;
+            locked = false;
+
+        },650);
+
+        if(mistakes >= 5){
+
+            setTimeout(()=>{
+                endGame("❌ Too many mistakes. You lose.");
+            },700);
+        }
+    }
 }
 
+function endGame(message){
+
+    gameActive = false;
+
+    locked = true;
+
+    clearInterval(timer);
+
+    document.getElementById("result").textContent =
+        message;
 }
 
-
-
-function check(){
-
-if(first.dataset.icon===second.dataset.icon){
-
-first.classList.add("open");
-second.classList.add("open");
-
-matched+=2;
-
-first=null;
-second=null;
-
-
-if(matched===cards.length){
-
-document.getElementById("result").innerHTML=
-"🏆 You Win!";
-
-}
-
-
-}else{
-
-
-lock=true;
-
-
-setTimeout(()=>{
-
-
-document.getElementById("result").innerHTML=
-"❌ Wrong match! Failed.";
-
-
-first.innerHTML="❓";
-second.innerHTML="❓";
-
-
-first=null;
-second=null;
-
-lock=false;
-
-
-},700);
-
-
-}
-
-
-}
+startGame();
 
 </script>
 

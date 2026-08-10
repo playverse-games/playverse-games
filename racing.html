@@ -7,86 +7,54 @@
 <title>PlayVerse Racing</title>
 
 <style>
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-font-family:Arial,sans-serif;
-}
-
 body{
+margin:0;
+font-family:Arial,sans-serif;
 background:#080b18;
 color:white;
-min-height:100vh;
+text-align:center;
 }
 
 header{
 background:#11162b;
 padding:20px;
-text-align:center;
-border-bottom:1px solid #252b50;
-}
-
-.logo{
-font-size:26px;
-font-weight:bold;
 color:#00eaff;
-}
-
-.container{
-padding:20px;
-text-align:center;
-}
-
-h1{
-margin-bottom:10px;
-}
-
-p{
-color:#aaa;
-margin-bottom:20px;
+font-size:24px;
+font-weight:bold;
 }
 
 .track{
-width:100%;
+width:90%;
 max-width:400px;
-height:350px;
-background:#151b35;
+height:500px;
+background:#222;
+margin:20px auto;
+border:3px solid #00eaff;
 border-radius:15px;
-margin:auto;
 position:relative;
 overflow:hidden;
-border:3px solid #252b50;
 }
 
 .finish{
 position:absolute;
-top:10px;
-left:0;
+top:20px;
 width:100%;
-text-align:center;
 font-size:25px;
 }
 
 .car{
 position:absolute;
-bottom:10px;
-left:45%;
 font-size:45px;
-transition:.3s;
 }
 
-.stats{
-display:flex;
-justify-content:space-around;
-margin:25px 0;
+.player{
+bottom:20px;
+left:45%;
 }
 
-.box{
-background:#151b35;
-padding:15px;
-border-radius:12px;
-width:30%;
+.enemy{
+top:80px;
+left:45%;
 }
 
 button{
@@ -94,7 +62,7 @@ background:#00eaff;
 border:none;
 padding:15px 35px;
 border-radius:25px;
-font-size:16px;
+font-size:18px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -106,45 +74,16 @@ color:#00eaff;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
-<div class="logo">🎮 PlayVerse Games</div>
+🏎️ PlayVerse Racing
 </header>
 
 
-<div class="container">
-
-<h1>🏎️ Racing Challenge</h1>
-
-<p>Tap race and reach the finish line first.</p>
-
-
-<div class="stats">
-
-<div class="box">
-Race
-<br>
-<b id="race">0</b>
-</div>
-
-<div class="box">
-Wins
-<br>
-<b id="wins">0</b>
-</div>
-
-<div class="box">
-Speed
-<br>
-<b id="speed">0</b>
-</div>
-
-</div>
-
+<h2>Race Against Opponent</h2>
 
 <div class="track">
 
@@ -152,72 +91,88 @@ Speed
 🏁 FINISH
 </div>
 
-<div class="car" id="car">
+<div class="car enemy" id="enemy">
 🏎️
 </div>
 
+<div class="car player" id="player">
+🚗
+</div>
+
 </div>
 
 
-<br>
-
-<button onclick="raceCar()">
-Start Race
+<button onclick="startRace()">
+START RACE
 </button>
 
-
 <div class="result" id="result">
-Ready to race!
-</div>
-
-
+Ready!
 </div>
 
 
 <script>
 
-let position=10;
-let race=0;
-let wins=0;
+let playerPosition=20;
+let enemyPosition=80;
+let raceRunning=false;
 
 
-function raceCar(){
+function startRace(){
 
-race++;
+if(raceRunning)return;
 
-document.getElementById("race").innerHTML=race;
+raceRunning=true;
 
+playerPosition=20;
+enemyPosition=80;
 
-position += Math.floor(Math.random()*40)+20;
-
-
-document.getElementById("car").style.bottom=position+"px";
-
-
-document.getElementById("speed").innerHTML=
-Math.floor(Math.random()*100)+" km/h";
+document.getElementById("result").innerHTML="Race started!";
 
 
-if(position>=280){
+let race=setInterval(()=>{
 
-wins++;
+// player movement
+playerPosition += Math.floor(Math.random()*20)+10;
 
-document.getElementById("wins").innerHTML=wins;
+// opponent movement
+enemyPosition += Math.floor(Math.random()*15)+12;
+
+
+document.getElementById("player").style.bottom=
+playerPosition+"px";
+
+document.getElementById("enemy").style.top=
+enemyPosition+"px";
+
+
+// opponent wins
+if(enemyPosition>=420){
+
+clearInterval(race);
 
 document.getElementById("result").innerHTML=
-"You won the race! 🏆";
+"❌ Opponent won! You lose.";
 
-position=10;
-
-document.getElementById("car").style.bottom=
-position+"px";
-
-}else{
-
-document.getElementById("result").innerHTML=
-"Racing... 🏎️";
+raceRunning=false;
 
 }
+
+
+// player wins
+if(playerPosition>=420){
+
+clearInterval(race);
+
+document.getElementById("result").innerHTML=
+"🏆 You won the race!";
+
+raceRunning=false;
+
+}
+
+
+},500);
 
 }
 

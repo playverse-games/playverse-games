@@ -3,753 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
-<title>PlayVerse Games - Account</title>
+
+<title>PlayVerse Account</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0a0a0a;
-    color:#fff;
-    min-height:100vh;
+margin:0;
+font-family:Arial,sans-serif;
+background:#080b18;
+color:white;
+text-align:center;
 }
 
 header{
-    background:#101010;
-    border-bottom:1px solid #222;
-    padding:16px 20px;
+background:#11162b;
+padding:20px;
+color:#00eaff;
+font-size:24px;
+font-weight:bold;
 }
 
-.header-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.profile{
+background:#11162b;
+width:90%;
+max-width:400px;
+margin:30px auto;
+padding:25px;
+border-radius:15px;
+border:1px solid #252b50;
 }
 
-.logo{
-    color:#00ff88;
-    font-size:24px;
-    font-weight:800;
+.avatar{
+font-size:70px;
 }
 
-.nav-account{
-    color:#fff;
-    text-decoration:none;
-    background:#191919;
-    border:1px solid #292929;
-    padding:9px 14px;
-    border-radius:9px;
-    font-size:14px;
+input{
+width:90%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin:10px;
 }
 
-nav{
-    background:#111;
-    border-bottom:1px solid #222;
-    overflow-x:auto;
-    white-space:nowrap;
+button{
+background:#00eaff;
+border:none;
+padding:12px 30px;
+border-radius:25px;
+font-weight:bold;
 }
 
-.nav-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
+.stats{
+margin-top:20px;
+display:grid;
+gap:10px;
 }
 
-nav a{
-    color:#aaa;
-    text-decoration:none;
-    padding:14px 18px;
-    font-size:14px;
+.box{
+background:#151b35;
+padding:15px;
+border-radius:10px;
 }
 
-nav a:hover,
-nav a.active{
-    color:#00ff88;
-}
-
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
-
-.page-title{
-    margin:10px 0 20px;
-}
-
-.page-title h1{
-    font-size:30px;
-    margin-bottom:7px;
-}
-
-.page-title p{
-    color:#888;
-}
-
-.card{
-    background:#121212;
-    border:1px solid #292929;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:16px;
-}
-
-.card h2{
-    font-size:19px;
-    margin-bottom:15px;
-}
-
-.balance-card{
-    background:linear-gradient(135deg,#111d17,#121212);
-    border-color:#214431;
-}
-
-.balance-label{
-    color:#888;
-    font-size:13px;
-    margin-bottom:8px;
-}
-
-.balance{
-    color:#00ff88;
-    font-size:36px;
-    font-weight:800;
-}
-
-.locked{
-    display:inline-block;
-    margin-top:10px;
-    padding:7px 10px;
-    background:#241b0b;
-    border:1px solid #5b461d;
-    color:#ffc857;
-    border-radius:7px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.status-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-}
-
-.status-box{
-    background:#191919;
-    border-radius:11px;
-    padding:14px;
-}
-
-.status-box span{
-    display:block;
-    color:#777;
-    font-size:12px;
-    margin-bottom:6px;
-}
-
-.status-box strong{
-    font-size:15px;
-}
-
-.countdown{
-    color:#00ff88;
-}
-
-.payment{
-    background:#17120b;
-    border:1px solid #4d3b19;
-}
-
-.payment-status{
-    color:#ffc857;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.payment p{
-    color:#999;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.withdraw-message{
-    background:#181818;
-    border-radius:10px;
-    padding:15px;
-    color:#999;
-    font-size:14px;
-    line-height:1.5;
-}
-
-.withdraw-form{
-    display:none;
-    margin-top:16px;
-}
-
-.field{
-    margin-bottom:13px;
-}
-
-.field label{
-    display:block;
-    color:#aaa;
-    font-size:13px;
-    margin-bottom:7px;
-}
-
-.field input{
-    width:100%;
-    padding:13px;
-    background:#0d0d0d;
-    border:1px solid #303030;
-    border-radius:9px;
-    color:#fff;
-    outline:none;
-}
-
-.field input:focus{
-    border-color:#00ff88;
-}
-
-.code-box{
-    background:#0d1712;
-    border:1px solid #214431;
-    color:#00ff88;
-    padding:14px;
-    border-radius:10px;
-    font-size:20px;
-    font-weight:bold;
-    letter-spacing:3px;
-    margin-bottom:15px;
-}
-
-.btn{
-    width:100%;
-    border:0;
-    border-radius:10px;
-    padding:13px;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.btn-green{
-    background:#00ff88;
-    color:#06100b;
-}
-
-.btn-dark{
-    background:#1b1b1b;
-    border:1px solid #303030;
-    color:#fff;
-}
-
-.transactions{
-    overflow:hidden;
-}
-
-.transaction{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    padding:14px 0;
-    border-bottom:1px solid #222;
-    font-size:13px;
-}
-
-.transaction:last-child{
-    border-bottom:0;
-}
-
-.transaction-name{
-    color:#ddd;
-}
-
-.transaction-date{
-    color:#666;
-    font-size:11px;
-    margin-top:4px;
-}
-
-.transaction-amount{
-    color:#00ff88;
-    font-weight:bold;
-    white-space:nowrap;
-}
-
-.empty{
-    color:#666;
-    font-size:13px;
-}
-
-.hall{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:13px 0;
-    border-bottom:1px solid #222;
-}
-
-.hall:last-child{
-    border-bottom:0;
-}
-
-.hall-avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:#1c1c1c;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#00ff88;
-    font-weight:bold;
-}
-
-.hall-info{
-    flex:1;
-}
-
-.hall-info strong{
-    display:block;
-    margin-bottom:4px;
-}
-
-.hall-info span{
-    color:#777;
-    font-size:12px;
-}
-
-.notice{
-    color:#777;
-    font-size:12px;
-    line-height:1.5;
-    margin-top:8px;
-}
-
-footer{
-    margin-top:30px;
-    padding:25px;
-    text-align:center;
-    border-top:1px solid #222;
-    background:#101010;
-    color:#777;
-    font-size:13px;
-}
-
-@media(max-width:600px){
-    .status-grid{
-        grid-template-columns:1fr;
-    }
-
-    .balance{
-        font-size:31px;
-    }
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">PLAYVERSE</div>
-        <a href="index.html" class="nav-account">Home</a>
-    </div>
+👤 PlayVerse Account
 </header>
 
-<nav>
-    <div class="nav-inner">
-        <a href="index.html">Home</a>
-        <a href="games.html">Games</a>
-        <a href="trading.html">Prediction</a>
-        <a href="tournament.html">Tournaments</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="account.html" class="active">Account</a>
-    </div>
-</nav>
 
-<main class="container">
+<div class="profile">
 
-    <section class="page-title">
-        <h1>👤 My Account</h1>
-        <p>Your tournament account and competition status.</p>
-    </section>
+<div class="avatar">
+🎮
+</div>
 
 
-    <!-- DEMO BALANCE -->
+<h2 id="username">
+Player
+</h2>
 
-    <section class="card balance-card">
 
-        <div class="balance-label">
-            Tournament Demo Balance
-        </div>
+<input id="nameInput" placeholder="Enter username">
 
-        <div class="balance" id="demoBalance">
-            $0.00
-        </div>
 
-        <div class="locked" id="balanceStatus">
-            PAYMENT NOT CONFIRMED
-        </div>
+<button onclick="saveName()">
+SAVE NAME
+</button>
 
-        <p class="notice">
-            Demo funds remain locked until a secure backend confirms
-            your tournament entry payment.
-        </p>
 
-    </section>
+<div class="stats">
 
+<div class="box">
+Games Played:
+<span id="games">0</span>
+</div>
 
-    <!-- TOURNAMENT STATUS -->
+<div class="box">
+Wins:
+<span id="wins">0</span>
+</div>
 
-    <section class="card">
+<div class="box">
+Losses:
+<span id="losses">0</span>
+</div>
 
-        <h2>🏆 Tournament Status</h2>
+<div class="box">
+Score:
+<span id="score">0</span>
+</div>
 
-        <div class="status-grid">
+</div>
 
-            <div class="status-box">
-                <span>Selected Tournament</span>
-                <strong id="tournamentName">
-                    Not Entered
-                </strong>
-            </div>
-
-            <div class="status-box">
-                <span>Entry Status</span>
-                <strong id="entryStatus">
-                    Payment Not Confirmed
-                </strong>
-            </div>
-
-            <div class="status-box">
-                <span>Time Remaining</span>
-                <strong class="countdown" id="countdown">
-                    —
-                </strong>
-            </div>
-
-            <div class="status-box">
-                <span>Current Position</span>
-                <strong id="position">
-                    —
-                </strong>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- PAYMENT -->
-
-    <section class="card payment">
-
-        <h2>💳 Tournament Entry</h2>
-
-        <div class="payment-status">
-            PAYMENT NOT CONFIRMED
-        </div>
-
-        <p>
-            Your demo balance cannot be activated from this page.
-            Once the secure payment system confirms your tournament
-            entry, the backend can activate your demo balance.
-        </p>
-
-        <br>
-
-        <a
-            href="tournament.html"
-            class="btn btn-dark"
-            style="display:block;text-align:center;text-decoration:none;"
-        >
-            View Tournaments
-        </a>
-
-    </section>
-
-
-    <!-- WITHDRAWAL -->
-
-    <section class="card">
-
-        <h2>💰 Winner Withdrawal</h2>
-
-        <div id="withdrawLocked" class="withdraw-message">
-            Only the verified winner of an eligible completed
-            tournament can withdraw.
-        </div>
-
-        <div id="withdrawForm" class="withdraw-form">
-
-            <div class="code-box" id="winnerCode">
-                WINNER CODE
-            </div>
-
-            <div class="field">
-                <label>Bank Name</label>
-                <input
-                    type="text"
-                    id="bankName"
-                    placeholder="Enter bank name"
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="field">
-                <label>Account Number</label>
-                <input
-                    type="text"
-                    id="accountNumber"
-                    placeholder="Enter account number"
-                    inputmode="numeric"
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="field">
-                <label>Account Name</label>
-                <input
-                    type="text"
-                    id="accountName"
-                    placeholder="Enter account name"
-                    autocomplete="off"
-                >
-            </div>
-
-            <div class="field">
-                <label>WhatsApp Number</label>
-                <input
-                    type="tel"
-                    id="whatsapp"
-                    placeholder="Enter WhatsApp number"
-                    autocomplete="off"
-                >
-            </div>
-
-            <button
-                class="btn btn-green"
-                onclick="submitWithdrawal()"
-            >
-                Submit Withdrawal Request
-            </button>
-
-        </div>
-
-        <p class="notice">
-            Withdrawal eligibility and payment are verified by the
-            secure PlayVerse administration system.
-        </p>
-
-    </section>
-
-
-    <!-- TRANSACTION HISTORY -->
-
-    <section class="card transactions">
-
-        <h2>📋 Transaction History</h2>
-
-        <div id="transactions">
-            <div class="empty">
-                No transactions available.
-            </div>
-        </div>
-
-    </section>
-
-
-    <!-- HALL OF FAME -->
-
-    <section class="card">
-
-        <h2>🏆 Hall of Fame</h2>
-
-        <div id="hallOfFame">
-
-            <div class="hall">
-                <div class="hall-avatar">—</div>
-
-                <div class="hall-info">
-                    <strong>
-                        No winners recorded yet
-                    </strong>
-
-                    <span>
-                        Verified winners will appear here.
-                    </span>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<footer>
-    PlayVerse Games © 2026
-</footer>
+</div>
 
 
 <script>
 
-/*
-    ACCOUNT PAGE
+function saveName(){
 
-    IMPORTANT:
-    This frontend intentionally does NOT create or confirm payments,
-    does NOT unlock the $500 balance, and does NOT decide real-money
-    winners.
-
-    Production:
-    - Monnify payment is created by the secure backend.
-    - Monnify confirms the transaction.
-    - Backend verifies the payment.
-    - Backend activates the tournament entry.
-    - Backend controls the real tournament balance.
-    - Backend determines the official winner.
-    - Backend generates/validates any withdrawal code.
-
-    Do not place Monnify secret keys in this file.
-*/
+let name=document.getElementById("nameInput").value;
 
 
-function loadAccount(){
+if(name){
 
-    /*
-       Demo display only.
+document.getElementById("username").innerHTML=name;
 
-       A production backend should provide the authenticated
-       user's verified balance and tournament state.
-    */
+localStorage.setItem("playerName",name);
 
-    const demoBalance =
-        document.getElementById("demoBalance");
-
-    const balanceStatus =
-        document.getElementById("balanceStatus");
-
-    const entryStatus =
-        document.getElementById("entryStatus");
-
-    /*
-       Do NOT automatically set $500 here.
-    */
-
-    demoBalance.textContent = "$0.00";
-
-    balanceStatus.textContent =
-        "PAYMENT NOT CONFIRMED";
-
-    entryStatus.textContent =
-        "Payment Not Confirmed";
-
-
-    loadTransactions();
-    loadHallOfFame();
-    loadWithdrawalState();
+}
 
 }
 
 
-function loadTransactions(){
+let saved=localStorage.getItem("playerName");
 
-    const container =
-        document.getElementById("transactions");
 
-    /*
-       Transactions will eventually come from the secure backend.
+if(saved){
 
-       localStorage is not treated as proof of payment.
-    */
-
-    container.innerHTML = `
-        <div class="empty">
-            No verified transactions available.
-        </div>
-    `;
+document.getElementById("username").innerHTML=saved;
 
 }
 
-
-function loadHallOfFame(){
-
-    const container =
-        document.getElementById("hallOfFame");
-
-    /*
-       Hall of Fame should be populated by verified
-       administrator/backend records.
-    */
-
-    container.innerHTML = `
-        <div class="hall">
-            <div class="hall-avatar">—</div>
-
-            <div class="hall-info">
-                <strong>
-                    No winners recorded yet
-                </strong>
-
-                <span>
-                    Verified winners will appear here.
-                </span>
-            </div>
-        </div>
-    `;
-
-}
-
-
-function loadWithdrawalState(){
-
-    const locked =
-        document.getElementById("withdrawLocked");
-
-    const form =
-        document.getElementById("withdrawForm");
-
-    /*
-       Never trust a browser-only winner flag for real money.
-
-       A secure backend must authenticate the user and confirm
-       that the user is the official winner before displaying
-       the withdrawal form.
-    */
-
-    locked.style.display = "block";
-    form.style.display = "none";
-
-}
-
-
-function submitWithdrawal(){
-
-    /*
-       This does not submit a real withdrawal.
-
-       Production withdrawal requests must go to a secure
-       authenticated backend endpoint.
-    */
-
-    alert(
-        "Withdrawal is currently unavailable because your tournament winner status has not been verified."
-    );
-
-}
-
-
-loadAccount();
 
 </script>
+
 
 </body>
 </html>

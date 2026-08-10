@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>PlayVerse Games - Leaderboard</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0a0a0a;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    background:#101010;
+    border-bottom:1px solid #222;
+    padding:16px 20px;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    color:#00ff88;
+    font-size:24px;
+    font-weight:800;
+}
+
+.account{
+    color:#fff;
+    text-decoration:none;
+    background:#191919;
+    border:1px solid #292929;
+    padding:9px 14px;
+    border-radius:9px;
+    font-size:14px;
+}
+
+nav{
+    background:#111;
+    border-bottom:1px solid #222;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    padding:14px 18px;
+    font-size:14px;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff88;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.title{
+    margin:10px 0 20px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#888;
+}
+
+.selector{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:18px;
+}
+
+.selector button{
+    border:1px solid #292929;
+    background:#151515;
+    color:#aaa;
+    padding:11px 15px;
+    border-radius:9px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.selector button.active{
+    background:#00ff88;
+    color:#06100b;
+    border-color:#00ff88;
+    font-weight:bold;
+}
+
+.panel{
+    background:#121212;
+    border:1px solid #292929;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.panel-head{
+    padding:18px 20px;
+    border-bottom:1px solid #252525;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.panel-head h2{
+    font-size:19px;
+}
+
+.live{
+    color:#00ff88;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:55px 1fr 150px 130px;
+    align-items:center;
+    gap:10px;
+    padding:16px 20px;
+    border-bottom:1px solid #202020;
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.rank{
+    font-size:16px;
+    font-weight:bold;
+    color:#777;
+}
+
+.rank.first{
+    color:#ffd54a;
+    font-size:21px;
+}
+
+.rank.second{
+    color:#ccc;
+}
+
+.rank.third{
+    color:#cd7f32;
+}
+
+.player{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#1d1d1d;
+    border:1px solid #303030;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#00ff88;
+    font-weight:bold;
+}
+
+.player-name{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.balance{
+    text-align:right;
+    color:#00ff88;
+    font-weight:bold;
+}
+
+.change{
+    text-align:right;
+    color:#777;
+    font-size:13px;
+}
+
+.my-position{
+    margin-top:18px;
+    background:#0d1712;
+    border:1px solid #214431;
+    border-radius:15px;
+    padding:18px;
+}
+
+.my-position h3{
+    margin-bottom:8px;
+}
+
+.my-position p{
+    color:#999;
+    font-size:14px;
+}
+
+.notice{
+    margin-top:18px;
+    background:#111;
+    border:1px solid #252525;
+    border-radius:14px;
+    padding:16px;
+    color:#777;
+    font-size:13px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    padding:25px;
+    text-align:center;
+    border-top:1px solid #222;
+    background:#101010;
+    color:#777;
+    font-size:13px;
+}
+
+@media(max-width:650px){
+
+    .row{
+        grid-template-columns:42px 1fr 105px;
+    }
+
+    .change{
+        display:none;
+    }
+
+    .balance{
+        font-size:13px;
+    }
+
+    .player-name{
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">PLAYVERSE</div>
+        <a href="account.html" class="account">Account</a>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="trading.html">Prediction</a>
+        <a href="tournament.html">Tournaments</a>
+        <a href="leaderboard.html" class="active">Leaderboard</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="title">
+        <h1>🏆 Leaderboard</h1>
+        <p>See the current tournament rankings.</p>
+    </section>
+
+    <div class="selector">
+        <button class="active" onclick="selectTournament('2',this)">
+            $2 Tournament
+        </button>
+
+        <button onclick="selectTournament('10',this)">
+            $10 Challenge
+        </button>
+
+        <button onclick="selectTournament('15',this)">
+            $15 Fast
+        </button>
+    </div>
+
+    <section class="panel">
+
+        <div class="panel-head">
+            <h2 id="leaderboardTitle">$2 Tournament</h2>
+            <span class="live">● LIVE</span>
+        </div>
+
+        <div id="leaderboard"></div>
+
+    </section>
+
+    <section class="my-position">
+
+        <h3>Your Position</h3>
+
+        <p id="myPosition">
+            Your verified tournament entry and balance will appear here.
+        </p>
+
+    </section>
+
+    <section class="notice">
+        <strong>Leaderboard rules</strong><br><br>
+
+        Rankings are based on the verified tournament demo balance.
+        The final winner is determined by the tournament's published
+        rules when the competition ends.
+
+        <br><br>
+
+        Leaderboard data should be controlled by the secure backend
+        in production. Browser storage is not a trusted source for
+        real-money winner determination.
+    </section>
+
+</main>
+
+<footer>
+    PlayVerse Games © 2026
+</footer>
+
+
+<script>
+
+let selectedTournament = "2";
+
+
+const demoPlayers = {
+
+    "2": [
+        {name:"Player 01",balance:1840.25},
+        {name:"Player 02",balance:1625.70},
+        {name:"Player 03",balance:1498.40},
+        {name:"Player 04",balance:1320.10},
+        {name:"Player 05",balance:1195.80},
+        {name:"Player 06",balance:1084.55},
+        {name:"Player 07",balance:975.30},
+        {name:"Player 08",balance:864.20},
+        {name:"Player 09",balance:755.90},
+        {name:"Player 10",balance:642.45}
+    ],
+
+    "10": [
+        {name:"Player 21",balance:2450.50},
+        {name:"Player 14",balance:2280.25},
+        {name:"Player 07",balance:2015.90},
+        {name:"Player 31",balance:1875.40},
+        {name:"Player 11",balance:1640.80},
+        {name:"Player 04",balance:1495.25},
+        {name:"Player 19",balance:1280.60},
+        {name:"Player 08",balance:1165.35},
+        {name:"Player 27",balance:1050.20},
+        {name:"Player 16",balance:920.15}
+    ],
+
+    "15": [
+        {name:"Player 05",balance:3980.50},
+        {name:"Player 18",balance:3745.20},
+        {name:"Player 02",balance:3520.75},
+        {name:"Player 26",balance:3180.40},
+        {name:"Player 09",balance:2875.10},
+        {name:"Player 14",balance:2510.80},
+        {name:"Player 22",balance:2245.55},
+        {name:"Player 03",balance:1980.30},
+        {name:"Player 17",balance:1755.15},
+        {name:"Player 11",balance:1490.90}
+    ]
+
+};
+
+
+function selectTournament(amount,button){
+
+    selectedTournament = amount;
+
+    document
+        .querySelectorAll(".selector button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    const title =
+        document.getElementById("leaderboardTitle");
+
+    if(amount === "2"){
+        title.textContent = "$2 Tournament";
+    }
+
+    if(amount === "10"){
+        title.textContent = "$10 Challenge";
+    }
+
+    if(amount === "15"){
+        title.textContent = "$15 Fast Challenge";
+    }
+
+    renderLeaderboard();
+
+}
+
+
+function renderLeaderboard(){
+
+    const container =
+        document.getElementById("leaderboard");
+
+    const players =
+        [...demoPlayers[selectedTournament]]
+        .sort((a,b) => b.balance - a.balance);
+
+    container.innerHTML = "";
+
+    players.forEach((player,index) => {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "row";
+
+        let rankClass = "";
+
+        if(index === 0){
+            rankClass = "first";
+        }else if(index === 1){
+            rankClass = "second";
+        }else if(index === 2){
+            rankClass = "third";
+        }
+
+        const initials =
+            player.name
+                .split(" ")
+                .map(word => word[0])
+                .join("")
+                .substring(0,2)
+                .toUpperCase();
+
+        row.innerHTML = `
+            <div class="rank ${rankClass}">
+                ${index + 1}
+            </div>
+
+            <div class="player">
+                <div class="avatar">${initials}</div>
+                <div class="player-name">
+                    ${player.name}
+                </div>
+            </div>
+
+            <div class="balance">
+                $${player.balance.toLocaleString(
+                    "en-US",
+                    {
+                        minimumFractionDigits:2,
+                        maximumFractionDigits:2
+                    }
+                )}
+            </div>
+
+            <div class="change">
+                LIVE
+            </div>
+        `;
+
+        container.appendChild(row);
+
+    });
+
+    document.getElementById("myPosition").textContent =
+        "Your verified tournament position will appear here once your account is connected to the tournament backend.";
+
+}
+
+
+renderLeaderboard();
+
+setInterval(renderLeaderboard,5000);
+
+</script>
+
+</body>
+  </html>

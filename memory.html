@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PlayVerse Memory Game</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#080b18;
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    padding:20px;
+    background:#11162b;
+    text-align:center;
+    border-bottom:1px solid #252b50;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    color:#00eaff;
+}
+
+.container{
+    padding:20px;
+    text-align:center;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+p{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:flex;
+    justify-content:space-around;
+    margin-bottom:20px;
+}
+
+.box{
+    background:#151b35;
+    padding:15px;
+    border-radius:12px;
+    width:30%;
+}
+
+.board{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    max-width:400px;
+    margin:auto;
+}
+
+.card{
+    height:75px;
+    background:#1d2550;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card.open{
+    background:#00eaff;
+    color:#000;
+}
+
+button{
+    margin-top:25px;
+    padding:14px 30px;
+    border:none;
+    border-radius:25px;
+    background:#00eaff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">🎮 PlayVerse Games</div>
+</header>
+
+<div class="container">
+
+<h1>🧠 Memory Challenge</h1>
+<p>Match all cards and beat your best score.</p>
+
+<div class="stats">
+<div class="box">
+Moves
+<br>
+<b id="moves">0</b>
+</div>
+
+<div class="box">
+Time
+<br>
+<b id="time">0</b>s
+</div>
+
+<div class="box">
+Score
+<br>
+<b id="score">0</b>
+</div>
+</div>
+
+<div class="board" id="board"></div>
+
+<button onclick="restart()">Restart Game</button>
+
+</div>
+
+
+<script>
+
+const icons=[
+"🔥","🔥",
+"⭐","⭐",
+"🎯","🎯",
+"🚀","🚀",
+"💎","💎",
+"⚡","⚡",
+"🎲","🎲",
+"🏆","🏆"
+];
+
+let first=null;
+let second=null;
+let lock=false;
+let moves=0;
+let score=0;
+let time=0;
+let timer;
+
+function start(){
+
+const board=document.getElementById("board");
+board.innerHTML="";
+
+icons.sort(()=>Math.random()-0.5);
+
+icons.forEach(icon=>{
+
+let card=document.createElement("div");
+
+card.className="card";
+card.dataset.icon=icon;
+card.innerHTML="❓";
+
+card.onclick=()=>flip(card);
+
+board.appendChild(card);
+
+});
+
+moves=0;
+score=0;
+time=0;
+
+document.getElementById("moves").innerHTML=0;
+document.getElementById("score").innerHTML=0;
+document.getElementById("time").innerHTML=0;
+
+clearInterval(timer);
+
+timer=setInterval(()=>{
+time++;
+document.getElementById("time").innerHTML=time;
+},1000);
+
+}
+
+function flip(card){
+
+if(lock || card.classList.contains("open"))
+return;
+
+card.innerHTML=card.dataset.icon;
+card.classList.add("open");
+
+
+if(!first){
+
+first=card;
+
+}else{
+
+second=card;
+moves++;
+
+document.getElementById("moves").innerHTML=moves;
+
+check();
+
+}
+
+}
+
+
+function check(){
+
+if(first.dataset.icon===second.dataset.icon){
+
+score+=10;
+
+document.getElementById("score").innerHTML=score;
+
+first=null;
+second=null;
+
+if(document.querySelectorAll(".open").length===icons.length){
+
+clearInterval(timer);
+
+alert("Congratulations! You completed the Memory Challenge 🎉");
+
+}
+
+}else{
+
+lock=true;
+
+setTimeout(()=>{
+
+first.innerHTML="❓";
+second.innerHTML="❓";
+
+first.classList.remove("open");
+second.classList.remove("open");
+
+first=null;
+second=null;
+
+lock=false;
+
+},800);
+
+}
+
+}
+
+
+function restart(){
+start();
+}
+
+
+start();
+
+</script>
+
+</body>
+  </html>

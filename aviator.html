@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,27 +9,75 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
 margin:0;
-font-family:Arial,sans-serif;
-background:#080b18;
+background:#050814;
 color:white;
-text-align:center;
 }
 
 header{
-background:#11162b;
-padding:20px;
+background:#10162d;
+padding:18px;
+text-align:center;
 color:#00eaff;
-font-size:24px;
+font-size:25px;
 font-weight:bold;
 }
 
+.game{
+max-width:600px;
+margin:auto;
+padding:20px;
+}
+
+
+.panel{
+background:#10162d;
+border:1px solid #263056;
+border-radius:18px;
+padding:18px;
+margin-bottom:18px;
+text-align:center;
+}
+
+
+.lock{
+font-size:60px;
+}
+
+
+button{
+background:#00eaff;
+border:none;
+padding:15px 30px;
+border-radius:12px;
+font-weight:bold;
+font-size:17px;
+}
+
+
+.flight{
+height:300px;
+background:#070b19;
+border-radius:15px;
+position:relative;
+overflow:hidden;
+}
+
+
 .plane{
-font-size:70px;
-margin-top:30px;
+position:absolute;
+bottom:30px;
+left:45%;
+font-size:55px;
 transition:.3s;
 }
+
 
 .multiplier{
 font-size:55px;
@@ -36,57 +85,131 @@ color:#00eaff;
 margin:20px;
 }
 
-button{
-background:#00eaff;
-border:none;
-padding:15px 35px;
-border-radius:25px;
-font-size:18px;
-font-weight:bold;
-margin:10px;
+
+.action{
+display:flex;
+gap:10px;
 }
+
+
+.action button{
+width:50%;
+}
+
+
+.start{
+background:#00eaff;
+}
+
+
+.cash{
+background:#00c853;
+color:white;
+}
+
 
 .result{
 font-size:22px;
-margin-top:20px;
+margin-top:15px;
+}
+
+
+#gameArea{
+display:none;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 ✈️ PlayVerse Aviator
 </header>
 
 
-<h2>Hard Flight Challenge</h2>
+<div class="game">
 
 
-<div class="plane" id="plane">
-✈️
+<div class="panel" id="lock">
+
+
+<div class="lock">
+🔒
 </div>
 
+
+<h2>
+Aviator Locked
+</h2>
+
+
+<p>
+Join tournament to unlock the flight challenge.
+</p>
+
+
+<button onclick="unlock()">
+JOIN TOURNAMENT
+</button>
+
+
+</div>
+
+
+
+
+<div id="gameArea">
+
+
+<div class="panel">
 
 <div class="multiplier" id="multi">
 1.00x
 </div>
 
 
-<button onclick="startFlight()">
-START FLIGHT
+<div class="flight">
+
+<div class="plane" id="plane">
+✈️
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="panel action">
+
+
+<button class="start" onclick="startFlight()">
+START
 </button>
 
 
-<button onclick="cashOut()">
+<button class="cash" onclick="cashOut()">
 CASH OUT
 </button>
 
 
-<div class="result" id="result">
-Ready?
+</div>
+
+
+<div class="panel result" id="result">
+Ready
+</div>
+
+
+</div>
+
+
 </div>
 
 
@@ -94,9 +217,19 @@ Ready?
 <script>
 
 let value=1;
-let flyAway;
+let crash;
 let timer;
 let flying=false;
+
+
+function unlock(){
+
+document.getElementById("lock").style.display="none";
+
+document.getElementById("gameArea").style.display="block";
+
+}
+
 
 
 function startFlight(){
@@ -106,40 +239,41 @@ if(flying)return;
 
 value=1;
 
-flyAway=(Math.random()*5+1).toFixed(2);
-
-document.getElementById("multi").innerHTML=
-"1.00x";
-
-document.getElementById("result").innerHTML=
-"Plane is flying...";
-
+crash=Math.random()*5+1;
 
 flying=true;
+
+
+document.getElementById("result").innerHTML=
+"✈️ Flying...";
 
 
 timer=setInterval(()=>{
 
 
-value+=0.12;
+value+=0.10;
 
 
 document.getElementById("multi").innerHTML=
 value.toFixed(2)+"x";
 
 
-document.getElementById("plane").style.transform=
-"translateY(-"+value*5+"px)";
+document.getElementById("plane").style.bottom=
+(30+value*20)+"px";
 
 
-if(value>=flyAway){
+
+if(value>=crash){
+
 
 clearInterval(timer);
 
 flying=false;
 
+
 document.getElementById("result").innerHTML=
-"✈️ Plane flew away! You lose.";
+"💥 Plane flew away! You lose";
+
 
 }
 
@@ -162,8 +296,9 @@ flying=false;
 
 
 document.getElementById("result").innerHTML=
-"🏆 You stopped at "+
+"🏆 Cashed out at "+
 value.toFixed(2)+"x";
+
 
 }
 

@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>PlayVerse Games - Crash</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0a0a0a;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    background:#101010;
+    border-bottom:1px solid #222;
+    padding:15px 18px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    color:#00ff88;
+    font-size:23px;
+    font-weight:800;
+}
+
+.account{
+    color:#fff;
+    text-decoration:none;
+    background:#191919;
+    border:1px solid #292929;
+    padding:9px 13px;
+    border-radius:9px;
+    font-size:13px;
+}
+
+nav{
+    background:#111;
+    border-bottom:1px solid #222;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    padding:13px 17px;
+    font-size:13px;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff88;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:18px;
+}
+
+.back{
+    display:inline-block;
+    color:#aaa;
+    text-decoration:none;
+    margin:5px 0 15px;
+    font-size:14px;
+}
+
+.back:hover{
+    color:#00ff88;
+}
+
+.game-card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.game-header{
+    padding:18px;
+    border-bottom:1px solid #242424;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.game-title{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.game-icon{
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    background:#1a1a1a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+}
+
+.game-title h1{
+    font-size:20px;
+}
+
+.game-title p{
+    color:#777;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.demo-status{
+    color:#00ff88;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.balance{
+    margin:15px 18px 0;
+    padding:13px;
+    background:#171717;
+    border-radius:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.balance span{
+    color:#888;
+    font-size:12px;
+}
+
+.balance strong{
+    color:#00ff88;
+    font-size:17px;
+}
+
+.locked{
+    color:#ffc857;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.game-area{
+    margin:18px;
+    height:390px;
+    position:relative;
+    overflow:hidden;
+    border-radius:16px;
+    border:1px solid #252525;
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #17362a 0,
+            #101c16 28%,
+            #090b0a 70%
+        );
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.12;
+    background-image:
+        linear-gradient(#777 1px,transparent 1px),
+        linear-gradient(90deg,#777 1px,transparent 1px);
+    background-size:50px 50px;
+    transform:perspective(300px)
+        rotateX(55deg)
+        scale(1.5);
+    transform-origin:center bottom;
+}
+
+.status{
+    position:absolute;
+    top:18px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+    z-index:5;
+}
+
+.multiplier{
+    position:absolute;
+    top:55px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:58px;
+    font-weight:900;
+    color:#00ff88;
+    text-shadow:0 0 22px rgba(0,255,136,.25);
+    z-index:5;
+}
+
+.multiplier.crashed{
+    color:#ff4d5a;
+    text-shadow:0 0 22px rgba(255,77,90,.2);
+}
+
+.rocket{
+    position:absolute;
+    left:8%;
+    bottom:18%;
+    font-size:47px;
+    z-index:6;
+    transform:rotate(-35deg);
+    transition:left .08s linear,bottom .08s linear;
+    filter:drop-shadow(0 5px 8px rgba(0,0,0,.6));
+}
+
+.flame{
+    position:absolute;
+    left:8%;
+    bottom:17%;
+    font-size:28px;
+    z-index:5;
+    opacity:.8;
+    transform:rotate(-35deg);
+}
+
+.explosion{
+    position:absolute;
+    left:50%;
+    top:52%;
+    transform:translate(-50%,-50%) scale(.5);
+    font-size:70px;
+    opacity:0;
+    z-index:8;
+    pointer-events:none;
+}
+
+.explosion.show{
+    animation:explode .7s ease forwards;
+}
+
+@keyframes explode{
+    0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.3);
+    }
+    35%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.1);
+    }
+    100%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(1.6);
+    }
+}
+
+.controls{
+    padding:0 18px 18px;
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.input-box{
+    background:#191919;
+    border:1px solid #292929;
+    border-radius:11px;
+    padding:12px;
+}
+
+.input-box label{
+    display:block;
+    color:#777;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.input-box input{
+    width:100%;
+    background:transparent;
+    border:0;
+    outline:0;
+    color:#fff;
+    font-size:16px;
+}
+
+.quick{
+    display:flex;
+    gap:7px;
+    margin-top:9px;
+}
+
+.quick button{
+    flex:1;
+    border:1px solid #303030;
+    background:#191919;
+    color:#aaa;
+    border-radius:7px;
+    padding:7px;
+    cursor:pointer;
+}
+
+.quick button:hover{
+    color:#00ff88;
+    border-color:#00ff88;
+}
+
+.action{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#00ff88;
+    color:#06100b;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.action:disabled{
+    background:#333;
+    color:#777;
+    cursor:not-allowed;
+}
+
+.cashout{
+    width:100%;
+    margin-top:9px;
+    padding:13px;
+    border:1px solid #00ff88;
+    border-radius:10px;
+    background:transparent;
+    color:#00ff88;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.cashout:disabled{
+    border-color:#333;
+    color:#666;
+    cursor:not-allowed;
+}
+
+.message{
+    margin-top:12px;
+    padding:12px;
+    border-radius:9px;
+    background:#17120b;
+    border:1px solid #4d3b19;
+    color:#ffc857;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.section{
+    margin-top:16px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    padding:18px;
+}
+
+.section h2{
+    font-size:17px;
+    margin-bottom:13px;
+}
+
+.history-row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #222;
+    font-size:13px;
+}
+
+.history-row:last-child{
+    border-bottom:0;
+}
+
+.history-row span{
+    color:#777;
+}
+
+.notice{
+    margin-top:15px;
+    color:#666;
+    font-size:11px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:28px;
+    padding:24px;
+    text-align:center;
+    border-top:1px solid #222;
+    background:#101010;
+    color:#777;
+    font-size:12px;
+}
+
+@media(max-width:600px){
+    .game-area{
+        height:350px;
+    }
+
+    .multiplier{
+        font-size:47px;
+    }
+
+    .rocket{
+        font-size:40px;
+    }
+}
+
+@media(max-width:420px){
+    .game-area{
+        height:320px;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">PLAYVERSE</div>
+        <a href="account.html" class="account">Account</a>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Home</a>
+        <a href="games.html" class="active">Games</a>
+        <a href="trading.html">Prediction</a>
+        <a href="tournament.html">Tournaments</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<a href="games.html" class="back">← Back to Games</a>
+
+<section class="game-card">
+
+    <div class="game-header">
+
+        <div class="game-title">
+
+            <div class="game-icon">🚀</div>
+
+            <div>
+                <h1>Crash</h1>
+                <p>Watch the multiplier rise</p>
+            </div>
+
+        </div>
+
+        <div class="demo-status">
+            DEMO MODE
+        </div>
+
+    </div>
+
+
+    <div class="balance">
+
+        <div>
+            <span>Demo Balance</span>
+            <div class="locked">
+                PAYMENT NOT CONFIRMED
+            </div>
+        </div>
+
+        <strong id="balance">$0.00</strong>
+
+    </div>
+
+
+    <div class="game-area" id="gameArea">
+
+        <div class="grid"></div>
+
+        <div class="status" id="status">
+            PLACE DEMO BET TO START
+        </div>
+
+        <div class="multiplier" id="multiplier">
+            1.00x
+        </div>
+
+        <div class="rocket" id="rocket">
+            🚀
+        </div>
+
+        <div class="flame" id="flame">
+            🔥
+        </div>
+
+        <div class="explosion" id="explosion">
+            💥
+        </div>
+
+    </div>
+
+
+    <div class="controls">
+
+        <div class="input-row">
+
+            <div class="input-box">
+
+                <label>DEMO STAKE</label>
+
+                <input
+                    id="stake"
+                    type="number"
+                    min="1"
+                    step="1"
+                    value="10"
+                    inputmode="decimal"
+                >
+
+            </div>
+
+
+            <div class="input-box">
+
+                <label>AUTO CASHOUT</label>
+
+                <input
+                    id="autoCashout"
+                    type="number"
+                    min="1.01"
+                    step="0.01"
+                    value="2.00"
+                    inputmode="decimal"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="quick">
+
+            <button onclick="setStake(5)">
+                $5
+            </button>
+
+            <button onclick="setStake(10)">
+                $10
+            </button>
+
+            <button onclick="setStake(25)">
+                $25
+            </button>
+
+            <button onclick="setStake(50)">
+                $50
+            </button>
+
+        </div>
+
+
+        <button
+            class="action"
+            id="startButton"
+            onclick="startRound()"
+        >
+            START ROUND
+        </button>
+
+
+        <button
+            class="cashout"
+            id="cashoutButton"
+            onclick="cashOut()"
+            disabled
+        >
+            CASH OUT
+        </button>
+
+
+        <div class="message">
+            <strong>PAYMENT NOT CONFIRMED</strong><br>
+            This is a visual demo. No money is deducted,
+            credited, or withdrawn from your account.
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <h2>📋 Round History</h2>
+
+    <div id="history">
+
+        <div class="history-row">
+            <span>No rounds played yet</span>
+            <span>—</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<p class="notice">
+    Demo gameplay only. Real tournament balances, entry payments,
+    winner calculations and withdrawals must be controlled by
+    a secure backend.
+</p>
+
+</main>
+
+
+<footer>
+    PlayVerse Games © 2026
+</footer>
+
+
+<script>
+"use strict";
+
+
+const multiplier =
+    document.getElementById("multiplier");
+
+const statusText =
+    document.getElementById("status");
+
+const rocket =
+    document.getElementById("rocket");
+
+const flame =
+    document.getElementById("flame");
+
+const explosion =
+    document.getElementById("explosion");
+
+const startButton =
+    document.getElementById("startButton");
+
+const cashoutButton =
+    document.getElementById("cashoutButton");
+
+const history =
+    document.getElementById("history");
+
+
+let running = false;
+let cashedOut = false;
+
+let roundStart = 0;
+let crashPoint = 0;
+let currentMultiplier = 1;
+
+let animationFrame = null;
+let roundNumber = 0;
+
+
+/*
+    Demo-only game state.
+
+    No localStorage balance is modified.
+    No payment is confirmed here.
+*/
+
+
+function setStake(value){
+
+    document.getElementById("stake").value =
+        value;
+
+}
+
+
+function generateCrashPoint(){
+
+    /*
+      Visual demo result only.
+      It has no connection to real-money prizes.
+    */
+
+    const value =
+        1.15 +
+        Math.random() * 6.85;
+
+    return Number(
+        value.toFixed(2)
+    );
+
+}
+
+
+function resetVisual(){
+
+    rocket.style.left =
+        "8%";
+
+    rocket.style.bottom =
+        "18%";
+
+    flame.style.left =
+        "8%";
+
+    flame.style.bottom =
+        "17%";
+
+    multiplier.textContent =
+        "1.00x";
+
+    multiplier.classList.remove(
+        "crashed"
+    );
+
+    explosion.classList.remove(
+        "show"
+    );
+
+}
+
+
+function startRound(){
+
+    if(running){
+        return;
+    }
+
+
+    const stake =
+        Number(
+            document.getElementById("stake").value
+        );
+
+    const autoCashout =
+        Number(
+            document.getElementById("autoCashout").value
+        );
+
+
+    if(
+        !Number.isFinite(stake) ||
+        stake <= 0
+    ){
+
+        alert(
+            "Enter a valid demo stake."
+        );
+
+        return;
+    }
+
+
+    if(
+        !Number.isFinite(autoCashout) ||
+        autoCashout <= 1
+    ){
+
+        alert(
+            "Auto cashout must be above 1.00x."
+        );
+
+        return;
+    }
+
+
+    /*
+      Production version must verify:
+
+      1. User authentication
+      2. Tournament entry
+      3. Available demo balance
+      4. Server-side game state
+
+      Never trust localStorage for those checks.
+    */
+
+
+    running = true;
+    cashedOut = false;
+
+    roundNumber++;
+
+    roundStart =
+        performance.now();
+
+    crashPoint =
+        generateCrashPoint();
+
+    currentMultiplier =
+        1;
+
+    resetVisual();
+
+
+    statusText.textContent =
+        "FLYING...";
+
+    startButton.disabled =
+        true;
+
+    startButton.textContent =
+        "ROUND RUNNING";
+
+    cashoutButton.disabled =
+        false;
+
+
+    animationFrame =
+        requestAnimationFrame(
+            updateRound
+        );
+
+}
+
+
+function updateRound(timestamp){
+
+    if(!running){
+        return;
+    }
+
+
+    const elapsed =
+        timestamp - roundStart;
+
+
+    /*
+      Smooth multiplier increase.
+    */
+
+    currentMultiplier =
+        Math.exp(
+            elapsed / 9000
+        );
+
+
+    multiplier.textContent =
+        currentMultiplier.toFixed(2) +
+        "x";
+
+
+    /*
+      Move rocket upward and to the right.
+    */
+
+    const progress =
+        Math.min(
+            1,
+            elapsed / 9000
+        );
+
+
+    const left =
+        8 +
+        progress * 76;
+
+    const bottom =
+        18 +
+        progress * 62;
+
+
+    rocket.style.left =
+        left + "%";
+
+    rocket.style.bottom =
+        bottom + "%";
+
+
+    flame.style.left =
+        Math.max(
+            3,
+            left - 1
+        ) + "%";
+
+    flame.style.bottom =
+        Math.max(
+            13,
+            bottom - 2
+        ) + "%";
+
+
+    /*
+      Automatic cashout.
+    */
+
+    const autoCashout =
+        Number(
+            document.getElementById(
+                "autoCashout"
+            ).value
+        );
+
+
+    if(
+        currentMultiplier >= autoCashout
+    ){
+
+        cashOut();
+
+        return;
+    }
+
+
+    /*
+      Automatic crash.
+    */
+
+    if(
+        currentMultiplier >= crashPoint
+    ){
+
+        crash();
+
+        return;
+    }
+
+
+    animationFrame =
+        requestAnimationFrame(
+            updateRound
+        );
+
+}
+
+
+function cashOut(){
+
+    if(
+        !running ||
+        cashedOut
+    ){
+        return;
+    }
+
+
+    cashedOut = true;
+
+    running = false;
+
+
+    if(animationFrame){
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+    }
+
+
+    const finalMultiplier =
+        Number(
+            currentMultiplier.toFixed(2)
+        );
+
+
+    statusText.textContent =
+        "CASHED OUT AT " +
+        finalMultiplier.toFixed(2) +
+        "x";
+
+    multiplier.textContent =
+        finalMultiplier.toFixed(2) +
+        "x";
+
+
+    cashoutButton.disabled =
+        true;
+
+    startButton.disabled =
+        false;
+
+    startButton.textContent =
+        "START NEXT ROUND";
+
+
+    addHistory(
+        finalMultiplier,
+        "CASH OUT"
+    );
+
+
+    setTimeout(
+        resetRound,
+        1800
+    );
+
+}
+
+
+function crash(){
+
+    if(!running){
+        return;
+    }
+
+
+    running = false;
+
+
+    if(animationFrame){
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
+    }
+
+
+    multiplier.classList.add(
+        "crashed"
+    );
+
+    multiplier.textContent =
+        currentMultiplier.toFixed(2) +
+        "x";
+
+
+    statusText.textContent =
+        "CRASHED";
+
+    explosion.classList.remove(
+        "show"
+    );
+
+
+    /*
+      Force browser to restart animation.
+    */
+
+    void explosion.offsetWidth;
+
+    explosion.classList.add(
+        "show"
+    );
+
+
+    cashoutButton.disabled =
+        true;
+
+    startButton.disabled =
+        false;
+
+    startButton.textContent =
+        "START NEXT ROUND";
+
+
+    addHistory(
+        currentMultiplier,
+        "CRASHED"
+    );
+
+
+    setTimeout(
+        resetRound,
+        2200
+    );
+
+}
+
+
+function resetRound(){
+
+    if(running){
+        return;
+    }
+
+    resetVisual();
+
+    statusText.textContent =
+        "PLACE DEMO BET TO START";
+
+    startButton.disabled =
+        false;
+
+    startButton.textContent =
+        "START ROUND";
+
+    cashoutButton.disabled =
+        true;
+
+}
+
+
+function addHistory(
+    multiplierValue,
+    result
+){
+
+    const empty =
+        history.querySelector(
+            ".history-row"
+        );
+
+
+    if(
+        empty &&
+        empty.textContent.includes(
+            "No rounds played yet"
+        )
+    ){
+
+        history.innerHTML = "";
+
+    }
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        "history-row";
+
+
+    const time =
+        new Date().toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    row.innerHTML =
+        "<span>#" +
+        roundNumber +
+        " • " +
+        time +
+        " • " +
+        result +
+        "</span>" +
+        "<strong>" +
+        Number(
+            multiplierValue
+        ).toFixed(2) +
+        "x</strong>";
+
+
+    history.prepend(
+        row
+    );
+
+
+    while(
+        history.children.length > 10
+    ){
+
+        history.removeChild(
+            history.lastElementChild
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "beforeunload",
+    function(){
+
+        if(animationFrame){
+            cancelAnimationFrame(
+                animationFrame
+            );
+        }
+
+    }
+);
+
+</script>
+
+</body>
+      </html>

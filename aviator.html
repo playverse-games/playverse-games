@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>PlayVerse Games - Aviator</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0a0a0a;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    background:#101010;
+    border-bottom:1px solid #222;
+    padding:15px 18px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    color:#00ff88;
+    font-size:23px;
+    font-weight:800;
+}
+
+.account{
+    color:#fff;
+    text-decoration:none;
+    background:#191919;
+    border:1px solid #292929;
+    padding:9px 13px;
+    border-radius:9px;
+    font-size:13px;
+}
+
+nav{
+    background:#111;
+    border-bottom:1px solid #222;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    padding:13px 17px;
+    font-size:13px;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff88;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:18px;
+}
+
+.back{
+    display:inline-block;
+    color:#aaa;
+    text-decoration:none;
+    margin:5px 0 15px;
+    font-size:14px;
+}
+
+.back:hover{
+    color:#00ff88;
+}
+
+.game-card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.game-header{
+    padding:18px;
+    border-bottom:1px solid #242424;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.game-title{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.game-icon{
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    background:#1a1a1a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+}
+
+.game-title h1{
+    font-size:20px;
+}
+
+.game-title p{
+    color:#777;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.demo-status{
+    color:#00ff88;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.balance{
+    margin:15px 18px 0;
+    padding:13px;
+    background:#171717;
+    border-radius:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.balance span{
+    color:#888;
+    font-size:12px;
+}
+
+.balance strong{
+    color:#00ff88;
+    font-size:17px;
+}
+
+.locked{
+    color:#ffc857;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.game-area{
+    margin:18px;
+    height:390px;
+    position:relative;
+    overflow:hidden;
+    border-radius:16px;
+    border:1px solid #252525;
+    background:
+        radial-gradient(circle at 50% 20%,#17362a 0,#101c16 25%,#090b0a 65%);
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.16;
+    background-image:
+        linear-gradient(#777 1px,transparent 1px),
+        linear-gradient(90deg,#777 1px,transparent 1px);
+    background-size:50px 50px;
+    transform:perspective(300px) rotateX(55deg) scale(1.5);
+    transform-origin:center bottom;
+}
+
+.status{
+    position:absolute;
+    top:18px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:#aaa;
+    font-size:13px;
+    z-index:3;
+}
+
+.multiplier{
+    position:absolute;
+    top:48px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:54px;
+    font-weight:900;
+    color:#00ff88;
+    z-index:3;
+    text-shadow:0 0 20px rgba(0,255,136,.25);
+}
+
+.plane{
+    position:absolute;
+    left:8%;
+    bottom:24%;
+    font-size:48px;
+    z-index:5;
+    transform:rotate(-15deg);
+    filter:drop-shadow(0 5px 8px rgba(0,0,0,.6));
+    transition:transform .15s linear;
+}
+
+.trail{
+    position:absolute;
+    left:10%;
+    bottom:28%;
+    width:0;
+    height:4px;
+    border-radius:20px;
+    background:#00ff88;
+    opacity:.65;
+    z-index:4;
+    transform:rotate(-15deg);
+    transform-origin:left center;
+}
+
+.crashed{
+    color:#ff4d5a !important;
+}
+
+.crash-text{
+    position:absolute;
+    top:48%;
+    left:0;
+    right:0;
+    text-align:center;
+    color:#ff4d5a;
+    font-size:24px;
+    font-weight:900;
+    display:none;
+    z-index:8;
+}
+
+.controls{
+    padding:0 18px 18px;
+}
+
+.bet-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.input-box{
+    background:#191919;
+    border:1px solid #292929;
+    border-radius:11px;
+    padding:12px;
+}
+
+.input-box label{
+    display:block;
+    color:#777;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.input-box input{
+    width:100%;
+    background:transparent;
+    border:0;
+    outline:0;
+    color:#fff;
+    font-size:16px;
+}
+
+.quick{
+    display:flex;
+    gap:7px;
+    margin-top:9px;
+}
+
+.quick button{
+    flex:1;
+    border:1px solid #303030;
+    background:#191919;
+    color:#aaa;
+    border-radius:7px;
+    padding:7px;
+    cursor:pointer;
+}
+
+.quick button:hover{
+    color:#00ff88;
+    border-color:#00ff88;
+}
+
+.action{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#00ff88;
+    color:#06100b;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.action:disabled{
+    background:#333;
+    color:#777;
+    cursor:not-allowed;
+}
+
+.message{
+    margin-top:12px;
+    padding:12px;
+    border-radius:9px;
+    background:#17120b;
+    border:1px solid #4d3b19;
+    color:#ffc857;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.section{
+    margin-top:16px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    padding:18px;
+}
+
+.section h2{
+    font-size:17px;
+    margin-bottom:13px;
+}
+
+.history-row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #222;
+    font-size:13px;
+}
+
+.history-row:last-child{
+    border-bottom:0;
+}
+
+.history-row span{
+    color:#777;
+}
+
+.notice{
+    margin-top:15px;
+    color:#666;
+    font-size:11px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:28px;
+    padding:24px;
+    text-align:center;
+    border-top:1px solid #222;
+    background:#101010;
+    color:#777;
+    font-size:12px;
+}
+
+@media(max-width:600px){
+    .game-area{
+        height:350px;
+    }
+
+    .multiplier{
+        font-size:44px;
+    }
+
+    .plane{
+        font-size:40px;
+    }
+}
+
+@media(max-width:420px){
+    .game-area{
+        height:320px;
+    }
+
+    .bet-row{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">PLAYVERSE</div>
+        <a href="account.html" class="account">Account</a>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Home</a>
+        <a href="games.html" class="active">Games</a>
+        <a href="trading.html">Prediction</a>
+        <a href="tournament.html">Tournaments</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <a href="games.html" class="back">← Back to Games</a>
+
+    <section class="game-card">
+
+        <div class="game-header">
+
+            <div class="game-title">
+                <div class="game-icon">✈️</div>
+
+                <div>
+                    <h1>Aviator</h1>
+                    <p>Demo flight challenge</p>
+                </div>
+            </div>
+
+            <div class="demo-status">
+                DEMO MODE
+            </div>
+
+        </div>
+
+
+        <div class="balance">
+            <div>
+                <span>Demo Balance</span>
+                <div class="locked">PAYMENT NOT CONFIRMED</div>
+            </div>
+
+            <strong id="balance">$0.00</strong>
+        </div>
+
+
+        <div class="game-area" id="gameArea">
+
+            <div class="grid"></div>
+
+            <div class="status" id="status">
+                PRESS START TO FLY
+            </div>
+
+            <div class="multiplier" id="multiplier">
+                1.00x
+            </div>
+
+            <div class="trail" id="trail"></div>
+
+            <div class="plane" id="plane">
+                ✈️
+            </div>
+
+            <div class="crash-text" id="crashText">
+                ROUND ENDED
+            </div>
+
+        </div>
+
+
+        <div class="controls">
+
+            <div class="bet-row">
+
+                <div class="input-box">
+                    <label>DEMO STAKE</label>
+
+                    <input
+                        id="stake"
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="10"
+                        inputmode="decimal"
+                    >
+                </div>
+
+                <div class="input-box">
+                    <label>AUTO STOP</label>
+
+                    <input
+                        id="autoStop"
+                        type="number"
+                        min="1.01"
+                        step="0.01"
+                        value="2.00"
+                        inputmode="decimal"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="quick">
+
+                <button onclick="setStake(5)">
+                    $5
+                </button>
+
+                <button onclick="setStake(10)">
+                    $10
+                </button>
+
+                <button onclick="setStake(25)">
+                    $25
+                </button>
+
+                <button onclick="setStake(50)">
+                    $50
+                </button>
+
+            </div>
+
+
+            <button
+                class="action"
+                id="startButton"
+                onclick="startRound()"
+            >
+                START ROUND
+            </button>
+
+
+            <div class="message">
+                <strong>PAYMENT NOT CONFIRMED</strong><br>
+                This game is currently a visual demo. No money
+                is deducted or credited from your account.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <h2>📋 Round History</h2>
+
+        <div id="history">
+
+            <div class="history-row">
+                <span>No rounds played yet</span>
+                <span>—</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <p class="notice">
+        Demo gameplay only. Do not use browser storage as proof of
+        payment, balance ownership, or a real-money winning result.
+        Tournament balances and real-money prizes must be controlled
+        by a secure backend.
+    </p>
+
+</main>
+
+
+<footer>
+    PlayVerse Games © 2026
+</footer>
+
+
+<script>
+
+"use strict";
+
+
+const plane =
+    document.getElementById("plane");
+
+const multiplier =
+    document.getElementById("multiplier");
+
+const statusText =
+    document.getElementById("status");
+
+const crashText =
+    document.getElementById("crashText");
+
+const trail =
+    document.getElementById("trail");
+
+const startButton =
+    document.getElementById("startButton");
+
+const history =
+    document.getElementById("history");
+
+
+let running = false;
+let animationFrame = null;
+let roundStart = 0;
+let crashAt = 0;
+let currentMultiplier = 1;
+let roundNumber = 0;
+
+
+/*
+    DEMO ONLY.
+
+    This balance is intentionally NOT connected to payment
+    confirmation and does not modify the player's real account.
+*/
+
+document.getElementById("balance").textContent =
+    "$0.00";
+
+
+function setStake(value){
+
+    document.getElementById("stake").value =
+        value;
+
+}
+
+
+function randomCrashPoint(){
+
+    /*
+      Visual demo only.
+
+      The result is generated locally and has no real-money
+      value.
+    */
+
+    const value =
+        1.15 +
+        Math.random() * 5.85;
+
+    return Number(
+        value.toFixed(2)
+    );
+
+}
+
+
+function resetPlane(){
+
+    plane.style.left =
+        "8%";
+
+    plane.style.bottom =
+        "24%";
+
+    plane.style.transform =
+        "rotate(-15deg)";
+
+    trail.style.left =
+        "10%";
+
+    trail.style.bottom =
+        "28%";
+
+    trail.style.width =
+        "0px";
+
+    multiplier.textContent =
+        "1.00x";
+
+    multiplier.classList.remove(
+        "crashed"
+    );
+
+    crashText.style.display =
+        "none";
+
+}
+
+
+function startRound(){
+
+    if(running){
+        return;
+    }
+
+
+    /*
+      IMPORTANT:
+
+      The real version should verify tournament entry and
+      available demo balance on the secure backend.
+
+      We intentionally do not deduct localStorage money here.
+    */
+
+
+    const stake =
+        Number(
+            document.getElementById("stake").value
+        );
+
+    const autoStop =
+        Number(
+            document.getElementById("autoStop").value
+        );
+
+
+    if(!Number.isFinite(stake) || stake <= 0){
+
+        alert(
+            "Enter a valid demo stake."
+        );
+
+        return;
+    }
+
+
+    if(!Number.isFinite(autoStop) || autoStop <= 1){
+
+        alert(
+            "Enter an auto-stop value above 1.00x."
+        );
+
+        return;
+    }
+
+
+    running = true;
+
+    roundNumber++;
+
+    roundStart =
+        performance.now();
+
+    crashAt =
+        randomCrashPoint();
+
+    currentMultiplier =
+        1;
+
+    resetPlane();
+
+
+    statusText.textContent =
+        "FLYING...";
+
+    startButton.textContent =
+        "ROUND RUNNING";
+
+    startButton.disabled =
+        true;
+
+
+    animationFrame =
+        requestAnimationFrame(
+            updateRound
+        );
+
+}
+
+
+function updateRound(timestamp){
+
+    if(!running){
+        return;
+    }
+
+
+    const elapsed =
+        timestamp - roundStart;
+
+
+    /*
+      Smooth demo multiplier.
+
+      It starts slowly and accelerates.
+    */
+
+    currentMultiplier =
+        Math.exp(
+            elapsed / 9000
+        );
+
+
+    currentMultiplier =
+        Math.max(
+            1,
+            currentMultiplier
+        );
+
+
+    multiplier.textContent =
+        currentMultiplier.toFixed(2) +
+        "x";
+
+
+    /*
+      Move the plane across the game area.
+    */
+
+    const progress =
+        Math.min(
+            1,
+            elapsed / 9000
+        );
+
+
+    const left =
+        8 +
+        progress * 75;
+
+    const bottom =
+        24 +
+        progress * 52;
+
+
+    plane.style.left =
+        left + "%";
+
+    plane.style.bottom =
+        bottom + "%";
+
+
+    plane.style.transform =
+        "rotate(-15deg)";
+
+
+    trail.style.left =
+        "10%";
+
+    trail.style.bottom =
+        (28 + progress * 50) + "%";
+
+    trail.style.width =
+        Math.max(
+            0,
+            (left - 10) * 5
+        ) + "px";
+
+
+    /*
+      Automatic round ending.
+    */
+
+    const autoStop =
+        Number(
+            document.getElementById("autoStop").value
+        );
+
+
+    if(currentMultiplier >= autoStop){
+
+        endRound(
+            "AUTO STOP",
+            currentMultiplier
+        );
+
+        return;
+    }
+
+
+    if(currentMultiplier >= crashAt){
+
+        endRound(
+            "ROUND ENDED",
+            currentMultiplier
+        );
+
+        return;
+    }
+
+
+    animationFrame =
+        requestAnimationFrame(
+            updateRound
+        );
+
+}
+
+
+function endRound(reason,multiplierValue){
+
+    running = false;
+
+
+    if(animationFrame){
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame =
+            null;
+    }
+
+
+    const finalMultiplier =
+        Number(
+            multiplierValue.toFixed(2)
+        );
+
+
+    multiplier.textContent =
+        finalMultiplier.toFixed(2) +
+        "x";
+
+
+    if(reason === "ROUND ENDED"){
+
+        multiplier.classList.add(
+            "crashed"
+        );
+
+        crashText.textContent =
+            "ROUND ENDED";
+
+        crashText.style.display =
+            "block";
+
+        statusText.textContent =
+            "The flight has ended.";
+
+    }else{
+
+        statusText.textContent =
+            "AUTO STOPPED AT " +
+            finalMultiplier.toFixed(2) +
+            "x";
+
+    }
+
+
+    startButton.disabled =
+        false;
+
+    startButton.textContent =
+        "START NEXT ROUND";
+
+
+    addHistory(
+        finalMultiplier,
+        reason
+    );
+
+
+    /*
+      Small delay before returning the plane to its
+      starting position so the user can see the result.
+    */
+
+    setTimeout(
+        resetAfterRound,
+        2200
+    );
+
+}
+
+
+function resetAfterRound(){
+
+    if(running){
+        return;
+    }
+
+    resetPlane();
+
+    statusText.textContent =
+        "PRESS START TO FLY";
+
+    startButton.textContent =
+        "START ROUND";
+
+}
+
+
+function addHistory(
+    multiplierValue,
+    result
+){
+
+    const empty =
+        history.querySelector(
+            ".history-row"
+        );
+
+    if(
+        empty &&
+        empty.textContent.includes(
+            "No rounds played yet"
+        )
+    ){
+        history.innerHTML = "";
+    }
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        "history-row";
+
+
+    const time =
+        new Date().toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    row.innerHTML =
+        "<span>" +
+        "#" +
+        roundNumber +
+        " • " +
+        time +
+        " • " +
+        result +
+        "</span>" +
+        "<strong>" +
+        multiplierValue.toFixed(2) +
+        "x</strong>";
+
+
+    history.prepend(
+        row
+    );
+
+
+    /*
+      Keep only the latest 10 visual records.
+    */
+
+    while(
+        history.children.length > 10
+    ){
+        history.removeChild(
+            history.lastElementChild
+        );
+    }
+
+}
+
+
+window.addEventListener(
+    "beforeunload",
+    function(){
+        if(animationFrame){
+            cancelAnimationFrame(
+                animationFrame
+            );
+        }
+    }
+);
+
+</script>
+
+</body>
+  </html>

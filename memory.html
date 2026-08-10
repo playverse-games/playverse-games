@@ -4,208 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PlayVerse Memory Game</title>
+<title>PlayVerse Memory</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial, sans-serif;
-}
-
 body{
-    background:#080b18;
-    color:white;
-    min-height:100vh;
+margin:0;
+font-family:Arial,sans-serif;
+background:#080b18;
+color:white;
+text-align:center;
 }
 
 header{
-    padding:20px;
-    background:#11162b;
-    text-align:center;
-    border-bottom:1px solid #252b50;
+background:#11162b;
+padding:20px;
+color:#00eaff;
+font-size:24px;
+font-weight:bold;
 }
 
-.logo{
-    font-size:26px;
-    font-weight:bold;
-    color:#00eaff;
-}
-
-.container{
-    padding:20px;
-    text-align:center;
-}
-
-h1{
-    margin-bottom:10px;
-}
-
-p{
-    color:#aaa;
-    margin-bottom:20px;
-}
-
-.stats{
-    display:flex;
-    justify-content:space-around;
-    margin-bottom:20px;
-}
-
-.box{
-    background:#151b35;
-    padding:15px;
-    border-radius:12px;
-    width:30%;
-}
-
-.board{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    max-width:400px;
-    margin:auto;
+.grid{
+display:grid;
+grid-template-columns:repeat(4,70px);
+gap:10px;
+justify-content:center;
+margin:25px auto;
 }
 
 .card{
-    height:75px;
-    background:#1d2550;
-    border-radius:12px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    cursor:pointer;
-    transition:.3s;
+width:70px;
+height:70px;
+background:#252b50;
+border-radius:10px;
+font-size:35px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
 }
 
-.card:hover{
-    transform:scale(1.05);
-}
-
-.card.open{
-    background:#00eaff;
-    color:#000;
+.open{
+background:#00eaff;
 }
 
 button{
-    margin-top:25px;
-    padding:14px 30px;
-    border:none;
-    border-radius:25px;
-    background:#00eaff;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
+background:#00eaff;
+border:none;
+padding:15px 35px;
+border-radius:25px;
+font-size:18px;
+font-weight:bold;
 }
+
+.result{
+margin-top:20px;
+color:#00eaff;
+font-size:22px;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">🎮 PlayVerse Games</div>
+🧠 PlayVerse Memory
 </header>
 
-<div class="container">
+<h2>Hard Memory Challenge</h2>
 
-<h1>🧠 Memory Challenge</h1>
-<p>Match all cards and beat your best score.</p>
+<p>Wrong match = Fail</p>
 
-<div class="stats">
-<div class="box">
-Moves
-<br>
-<b id="moves">0</b>
-</div>
+<div class="grid" id="grid"></div>
 
-<div class="box">
-Time
-<br>
-<b id="time">0</b>s
-</div>
+<button onclick="startGame()">START</button>
 
-<div class="box">
-Score
-<br>
-<b id="score">0</b>
-</div>
-</div>
-
-<div class="board" id="board"></div>
-
-<button onclick="restart()">Restart Game</button>
-
+<div class="result" id="result">
+Remember the cards!
 </div>
 
 
 <script>
 
-const icons=[
-"🔥","🔥",
-"⭐","⭐",
-"🎯","🎯",
-"🚀","🚀",
-"💎","💎",
-"⚡","⚡",
-"🎲","🎲",
-"🏆","🏆"
-];
-
+let cards=[];
 let first=null;
 let second=null;
 let lock=false;
-let moves=0;
-let score=0;
-let time=0;
-let timer;
+let matched=0;
 
-function start(){
 
-const board=document.getElementById("board");
-board.innerHTML="";
+function startGame(){
 
-icons.sort(()=>Math.random()-0.5);
+let icons=[
+"🔥","🔥",
+"⭐","⭐",
+"🍀","🍀",
+"💎","💎",
+"⚡","⚡",
+"🎮","🎮",
+"🏆","🏆",
+"🚀","🚀"
+];
 
-icons.forEach(icon=>{
+
+cards=icons.sort(()=>Math.random()-0.5);
+
+let grid=document.getElementById("grid");
+
+grid.innerHTML="";
+
+matched=0;
+
+cards.forEach(icon=>{
 
 let card=document.createElement("div");
 
 card.className="card";
+
 card.dataset.icon=icon;
+
 card.innerHTML="❓";
 
 card.onclick=()=>flip(card);
 
-board.appendChild(card);
+grid.appendChild(card);
 
 });
 
-moves=0;
-score=0;
-time=0;
 
-document.getElementById("moves").innerHTML=0;
-document.getElementById("score").innerHTML=0;
-document.getElementById("time").innerHTML=0;
-
-clearInterval(timer);
-
-timer=setInterval(()=>{
-time++;
-document.getElementById("time").innerHTML=time;
-},1000);
+document.getElementById("result").innerHTML=
+"Game Started!";
 
 }
 
+
+
 function flip(card){
 
-if(lock || card.classList.contains("open"))
-return;
+if(lock || card.innerHTML!=="❓") return;
+
 
 card.innerHTML=card.dataset.icon;
-card.classList.add("open");
 
 
 if(!first){
@@ -215,9 +154,6 @@ first=card;
 }else{
 
 second=card;
-moves++;
-
-document.getElementById("moves").innerHTML=moves;
 
 check();
 
@@ -226,57 +162,60 @@ check();
 }
 
 
+
 function check(){
 
 if(first.dataset.icon===second.dataset.icon){
 
-score+=10;
+first.classList.add("open");
+second.classList.add("open");
 
-document.getElementById("score").innerHTML=score;
+matched+=2;
 
 first=null;
 second=null;
 
-if(document.querySelectorAll(".open").length===icons.length){
 
-clearInterval(timer);
+if(matched===cards.length){
 
-alert("Congratulations! You completed the Memory Challenge 🎉");
+document.getElementById("result").innerHTML=
+"🏆 You Win!";
 
 }
 
+
 }else{
+
 
 lock=true;
 
+
 setTimeout(()=>{
+
+
+document.getElementById("result").innerHTML=
+"❌ Wrong match! Failed.";
+
 
 first.innerHTML="❓";
 second.innerHTML="❓";
 
-first.classList.remove("open");
-second.classList.remove("open");
 
 first=null;
 second=null;
 
 lock=false;
 
-},800);
+
+},700);
+
 
 }
 
+
 }
-
-
-function restart(){
-start();
-}
-
-
-start();
 
 </script>
 
 </body>
-  </html>
+</html>

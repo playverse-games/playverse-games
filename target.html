@@ -2,863 +2,219 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
-<title>PlayVerse Games - Target</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PlayVerse Target</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0a0a0a;
-    color:#fff;
-    min-height:100vh;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#080b18;
+    color:white;
+    text-align:center;
 }
 
 header{
-    background:#101010;
-    border-bottom:1px solid #222;
-    padding:15px 18px;
-    position:sticky;
-    top:0;
-    z-index:20;
-}
-
-.header-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.logo{
-    color:#00ff88;
-    font-size:23px;
-    font-weight:800;
-}
-
-.account{
-    color:#fff;
-    text-decoration:none;
-    background:#191919;
-    border:1px solid #292929;
-    padding:9px 13px;
-    border-radius:9px;
-    font-size:13px;
-}
-
-nav{
-    background:#111;
-    border-bottom:1px solid #222;
-    overflow-x:auto;
-    white-space:nowrap;
-}
-
-.nav-inner{
-    max-width:1100px;
-    margin:auto;
-    display:flex;
-}
-
-nav a{
-    color:#aaa;
-    text-decoration:none;
-    padding:13px 17px;
-    font-size:13px;
-}
-
-nav a:hover,
-nav a.active{
-    color:#00ff88;
-}
-
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:18px;
-}
-
-.back{
-    display:inline-block;
-    color:#aaa;
-    text-decoration:none;
-    margin:5px 0 15px;
-    font-size:14px;
-}
-
-.back:hover{color:#00ff88}
-
-.game-card{
-    background:#111;
-    border:1px solid #292929;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.game-header{
-    padding:18px;
-    border-bottom:1px solid #242424;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.game-title{
-    display:flex;
-    align-items:center;
-    gap:11px;
-}
-
-.game-icon{
-    width:45px;
-    height:45px;
-    border-radius:13px;
-    background:#1a1a1a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-}
-
-.game-title h1{font-size:20px}
-
-.game-title p{
-    color:#777;
-    font-size:12px;
-    margin-top:3px;
-}
-
-.demo-status{
-    color:#00ff88;
-    font-size:11px;
+    background:#11162b;
+    padding:20px;
+    color:#00eaff;
+    font-size:24px;
     font-weight:bold;
 }
 
-.balance{
-    margin:15px 18px 0;
-    padding:13px;
-    background:#171717;
-    border-radius:11px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.balance span{
-    color:#888;
-    font-size:12px;
-}
-
-.balance strong{
-    color:#00ff88;
-    font-size:17px;
-}
-
-.locked{
-    color:#ffc857;
-    font-size:11px;
-    margin-top:4px;
-}
-
-.game-area{
-    margin:18px;
-    height:390px;
+.game{
+    width:90%;
+    max-width:400px;
+    height:450px;
+    margin:20px auto;
+    background:#151b35;
+    border:2px solid #00eaff;
+    border-radius:15px;
     position:relative;
     overflow:hidden;
-    border-radius:16px;
-    border:1px solid #252525;
-    background:#0d0d0d;
-    cursor:crosshair;
-}
-
-.grid{
-    position:absolute;
-    inset:0;
-    opacity:.12;
-    background-image:
-        linear-gradient(#777 1px,transparent 1px),
-        linear-gradient(90deg,#777 1px,transparent 1px);
-    background-size:45px 45px;
 }
 
 .target{
     position:absolute;
-    width:78px;
-    height:78px;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    background:
-        radial-gradient(
-            circle,
-            #fff 0 12%,
-            #ff4d5a 13% 30%,
-            #fff 31% 47%,
-            #ff4d5a 48% 67%,
-            #fff 68% 82%,
-            #ff4d5a 83% 100%
-        );
-    box-shadow:0 0 25px rgba(255,77,90,.25);
-    display:none;
+    font-size:35px;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.target.hit{
-    animation:hit .25s ease;
-}
-
-@keyframes hit{
-    0%{transform:translate(-50%,-50%) scale(1)}
-    50%{transform:translate(-50%,-50%) scale(1.3)}
-    100%{transform:translate(-50%,-50%) scale(0)}
-}
-
-.center-message{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#777;
-    font-size:14px;
-    pointer-events:none;
-}
-
-.timer{
-    position:absolute;
-    top:15px;
-    left:15px;
-    background:#151515;
-    border:1px solid #292929;
-    padding:8px 11px;
-    border-radius:8px;
-    color:#00ff88;
-    font-size:12px;
+button{
+    background:#00eaff;
+    border:none;
+    padding:15px 35px;
+    border-radius:25px;
+    font-size:18px;
     font-weight:bold;
-    z-index:5;
-}
-
-.score{
-    position:absolute;
-    top:15px;
-    right:15px;
-    background:#151515;
-    border:1px solid #292929;
-    padding:8px 11px;
-    border-radius:8px;
-    color:#fff;
-    font-size:12px;
-    font-weight:bold;
-    z-index:5;
-}
-
-.controls{
-    padding:0 18px 18px;
 }
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-    margin-bottom:12px;
+    margin:15px;
+    font-size:20px;
 }
 
-.stat{
-    background:#191919;
-    border-radius:10px;
-    padding:12px;
-    text-align:center;
+.result{
+    margin-top:20px;
+    color:#00eaff;
+    font-size:22px;
 }
 
-.stat span{
-    display:block;
-    color:#777;
-    font-size:10px;
-    margin-bottom:5px;
-}
-
-.stat strong{
-    font-size:17px;
-}
-
-.action{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:10px;
-    background:#00ff88;
-    color:#06100b;
-    font-size:15px;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.action:disabled{
-    background:#333;
-    color:#777;
-    cursor:not-allowed;
-}
-
-.message{
-    margin-top:12px;
-    padding:12px;
-    border-radius:9px;
-    background:#17120b;
-    border:1px solid #4d3b19;
-    color:#ffc857;
-    font-size:12px;
-    line-height:1.5;
-}
-
-.section{
-    margin-top:16px;
-    background:#111;
-    border:1px solid #292929;
-    border-radius:16px;
-    padding:18px;
-}
-
-.section h2{
-    font-size:17px;
-    margin-bottom:13px;
-}
-
-.history-row{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #222;
-    font-size:13px;
-}
-
-.history-row:last-child{border-bottom:0}
-
-.history-row span{color:#777}
-
-.notice{
-    margin-top:15px;
-    color:#666;
-    font-size:11px;
-    line-height:1.5;
-}
-
-footer{
-    margin-top:28px;
-    padding:24px;
-    text-align:center;
-    border-top:1px solid #222;
-    background:#101010;
-    color:#777;
-    font-size:12px;
-}
-
-@media(max-width:600px){
-    .game-area{height:350px}
-}
-
-@media(max-width:420px){
-    .game-area{height:320px}
-    .stats{grid-template-columns:1fr}
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">PLAYVERSE</div>
-        <a href="account.html" class="account">Account</a>
-    </div>
+🎯 PlayVerse Target
 </header>
 
-<nav>
-    <div class="nav-inner">
-        <a href="index.html">Home</a>
-        <a href="games.html" class="active">Games</a>
-        <a href="trading.html">Prediction</a>
-        <a href="tournament.html">Tournaments</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="account.html">Account</a>
-    </div>
-</nav>
+<h2>Hard Target Challenge</h2>
 
-<main class="container">
+<div class="stats">
+Targets: <span id="hits">0</span>/10
+</div>
 
-<a href="games.html" class="back">← Back to Games</a>
+<div class="game" id="game">
 
-<section class="game-card">
+<div class="target" id="target" onclick="hitTarget()">
+🎯
+</div>
 
-    <div class="game-header">
+</div>
 
-        <div class="game-title">
-            <div class="game-icon">🎯</div>
+<button onclick="startGame()">
+START GAME
+</button>
 
-            <div>
-                <h1>Target</h1>
-                <p>Hit the moving targets</p>
-            </div>
-        </div>
+<div class="result" id="result">
+Hit the target. Missing means failure!
+</div>
 
-        <div class="demo-status">DEMO MODE</div>
-
-    </div>
-
-    <div class="balance">
-        <div>
-            <span>Demo Balance</span>
-            <div class="locked">PAYMENT NOT CONFIRMED</div>
-        </div>
-
-        <strong>$0.00</strong>
-    </div>
-
-    <div class="game-area" id="gameArea">
-
-        <div class="grid"></div>
-
-        <div class="timer" id="timer">
-            30s
-        </div>
-
-        <div class="score">
-            Score: <span id="score">0</span>
-        </div>
-
-        <div class="center-message" id="centerMessage">
-            Press START to begin
-        </div>
-
-        <div class="target" id="target"></div>
-
-    </div>
-
-    <div class="controls">
-
-        <div class="stats">
-
-            <div class="stat">
-                <span>HITS</span>
-                <strong id="hits">0</strong>
-            </div>
-
-            <div class="stat">
-                <span>TIME</span>
-                <strong id="timeStat">30</strong>
-            </div>
-
-            <div class="stat">
-                <span>BEST</span>
-                <strong id="best">0</strong>
-            </div>
-
-        </div>
-
-        <button
-            class="action"
-            id="startButton"
-            onclick="startGame()"
-        >
-            START GAME
-        </button>
-
-        <div class="message">
-            <strong>PAYMENT NOT CONFIRMED</strong><br>
-            This is demo gameplay. No money is deducted or
-            credited from your account.
-        </div>
-
-    </div>
-
-</section>
-
-<section class="section">
-
-    <h2>📋 Game History</h2>
-
-    <div id="history">
-
-        <div class="history-row">
-            <span>No games played yet</span>
-            <span>—</span>
-        </div>
-
-    </div>
-
-</section>
-
-<p class="notice">
-    Demo gameplay only. Real tournament balances and prize
-    eligibility must be controlled by a secure backend.
-</p>
-
-</main>
-
-<footer>
-    PlayVerse Games © 2026
-</footer>
 
 <script>
-"use strict";
 
-const gameArea =
-    document.getElementById("gameArea");
-
-const target =
-    document.getElementById("target");
-
-const centerMessage =
-    document.getElementById("centerMessage");
-
-const timerElement =
-    document.getElementById("timer");
-
-const timeStat =
-    document.getElementById("timeStat");
-
-const scoreElement =
-    document.getElementById("score");
-
-const hitsElement =
-    document.getElementById("hits");
-
-const bestElement =
-    document.getElementById("best");
-
-const startButton =
-    document.getElementById("startButton");
-
-const history =
-    document.getElementById("history");
-
-
-let gameRunning = false;
-let timeLeft = 30;
-let score = 0;
-let hits = 0;
-let gameTimer = null;
-let targetTimeout = null;
-let gamesPlayed = 0;
-
-
-/*
-  BEST SCORE IS ONLY VISUAL DEMO STATE.
-  It is NOT used to determine tournament winners.
-*/
-let bestScore = 0;
+let hits=0;
+let running=false;
+let moveTimer;
+let speed=700;
 
 
 function startGame(){
 
-    if(gameRunning){
-        return;
-    }
+hits=0;
+speed=700;
+running=true;
 
-    gameRunning = true;
+document.getElementById("hits").innerHTML=hits;
+document.getElementById("result").innerHTML=
+"Game Started!";
 
-    timeLeft = 30;
-    score = 0;
-    hits = 0;
-
-    updateStats();
-
-    centerMessage.style.display =
-        "none";
-
-    startButton.disabled =
-        true;
-
-    startButton.textContent =
-        "GAME RUNNING";
-
-    timerElement.textContent =
-        "30s";
-
-    showTarget();
-
-    gameTimer =
-        setInterval(
-            updateTimer,
-            1000
-        );
+moveTarget();
 
 }
 
 
-function updateTimer(){
+function moveTarget(){
 
-    timeLeft--;
-
-    updateStats();
-
-    if(timeLeft <= 0){
-        endGame();
-    }
-
-}
+clearInterval(moveTimer);
 
 
-function updateStats(){
+moveTimer=setInterval(()=>{
 
-    timerElement.textContent =
-        timeLeft + "s";
+if(!running) return;
 
-    timeStat.textContent =
-        timeLeft;
 
-    scoreElement.textContent =
-        score;
+let target=document.getElementById("target");
 
-    hitsElement.textContent =
-        hits;
 
-    bestElement.textContent =
-        bestScore;
+let x=Math.random()*330;
+let y=Math.random()*380;
+
+
+target.style.left=x+"px";
+target.style.top=y+"px";
+
+
+// Sometimes become faster
+if(Math.random()>0.6){
+
+speed=Math.max(200,speed-100);
 
 }
 
 
-function showTarget(){
-
-    if(!gameRunning){
-        return;
-    }
-
-    const rect =
-        gameArea.getBoundingClientRect();
-
-    const targetSize =
-        78;
-
-    const topMin =
-        75;
-
-    const topMax =
-        rect.height - 35;
-
-    const leftMin =
-        targetSize / 2 + 5;
-
-    const leftMax =
-        rect.width -
-        targetSize / 2 -
-        5;
-
-    const x =
-        leftMin +
-        Math.random() *
-        (leftMax - leftMin);
-
-    const y =
-        topMin +
-        Math.random() *
-        Math.max(
-            20,
-            topMax - topMin
-        );
-
-    target.style.left =
-        x + "px";
-
-    target.style.top =
-        y + "px";
-
-    target.style.display =
-        "block";
-
-    target.classList.remove("hit");
-
-    /*
-      If the player does not hit the target quickly,
-      automatically move it.
-    */
-
-    clearTimeout(targetTimeout);
-
-    targetTimeout =
-        setTimeout(
-            function(){
-                showTarget();
-            },
-            1100
-        );
+},speed);
 
 }
 
 
-target.addEventListener(
-    "click",
-    function(event){
 
-        event.stopPropagation();
+function hitTarget(){
 
-        if(!gameRunning){
-            return;
-        }
-
-        clearTimeout(targetTimeout);
-
-        hits++;
-
-        score += 100;
-
-        target.classList.add("hit");
-
-        updateStats();
-
-        setTimeout(
-            function(){
-
-                if(gameRunning){
-                    showTarget();
-                }
-
-            },
-            180
-        );
-
-    }
-);
+if(!running) return;
 
 
-gameArea.addEventListener(
-    "click",
-    function(event){
+hits++;
 
-        if(!gameRunning){
-            return;
-        }
-
-        if(
-            event.target === gameArea ||
-            event.target.classList.contains("grid")
-        ){
-
-            /*
-              Missed click.
-              No balance change.
-            */
-
-            score =
-                Math.max(
-                    0,
-                    score - 10
-                );
-
-            updateStats();
-        }
-
-    }
-);
+document.getElementById("hits").innerHTML=hits;
 
 
-function endGame(){
+if(hits>=10){
 
-    if(!gameRunning){
-        return;
-    }
+winGame();
 
-    gameRunning = false;
+}else{
 
-    clearInterval(gameTimer);
-    clearTimeout(targetTimeout);
+document.getElementById("result").innerHTML=
+"🎯 Good hit!";
 
-    gameTimer = null;
-    targetTimeout = null;
-
-    target.style.display =
-        "none";
-
-    if(score > bestScore){
-        bestScore = score;
-    }
-
-    updateStats();
-
-    centerMessage.textContent =
-        "Game Over • Score: " + score;
-
-    centerMessage.style.display =
-        "flex";
-
-    startButton.disabled =
-        false;
-
-    startButton.textContent =
-        "PLAY AGAIN";
-
-    gamesPlayed++;
-
-    addHistory();
+}
 
 }
 
 
-function addHistory(){
 
-    const empty =
-        history.querySelector(".history-row");
+document.getElementById("game").onclick=function(e){
 
-    if(
-        empty &&
-        empty.textContent.includes(
-            "No games played yet"
-        )
-    ){
-        history.innerHTML = "";
-    }
+if(e.target.id!=="target" && running){
 
-    const row =
-        document.createElement("div");
+loseGame();
 
-    row.className =
-        "history-row";
-
-    const time =
-        new Date().toLocaleTimeString(
-            [],
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-    row.innerHTML =
-        "<span>Game #" +
-        gamesPlayed +
-        " • " +
-        time +
-        " • " +
-        hits +
-        " hits</span>" +
-        "<strong>" +
-        score +
-        " pts</strong>";
-
-    history.prepend(row);
-
-    while(history.children.length > 10){
-        history.removeChild(
-            history.lastElementChild
-        );
-    }
+}
 
 }
 
 
-window.addEventListener(
-    "beforeunload",
-    function(){
 
-        clearInterval(gameTimer);
-        clearTimeout(targetTimeout);
+function loseGame(){
 
-    }
-);
+running=false;
 
-updateStats();
+clearInterval(moveTimer);
+
+document.getElementById("result").innerHTML=
+"❌ You missed! Game Failed.";
+
+}
+
+
+
+function winGame(){
+
+running=false;
+
+clearInterval(moveTimer);
+
+document.getElementById("result").innerHTML=
+"🏆 You completed the challenge!";
+
+}
+
 </script>
 
 </body>
-  </html>
+</html>

@@ -1,89 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>PlayVerse Cards</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
 margin:0;
-font-family:Arial,sans-serif;
-background:#080b18;
+background:
+radial-gradient(circle,#163d35,#050814);
 color:white;
+}
+
+
+header{
+background:#10162d;
+padding:18px;
+text-align:center;
+color:#00eaff;
+font-size:25px;
+font-weight:bold;
+border-bottom:1px solid #263056;
+}
+
+
+.game{
+max-width:650px;
+margin:auto;
+padding:20px;
+}
+
+
+.panel{
+background:rgba(16,22,45,.95);
+border:1px solid #263056;
+border-radius:18px;
+padding:20px;
+margin-bottom:18px;
 text-align:center;
 }
 
-header{
-background:#11162b;
-padding:20px;
-color:#00eaff;
-font-size:24px;
-font-weight:bold;
+
+.table{
+
+background:
+radial-gradient(circle,#176b45,#06351f);
+
+border-radius:25px;
+padding:25px;
+
+border:5px solid #8b6b32;
+
+box-shadow:
+0 0 30px #000;
+
 }
+
 
 .cards{
-display:flex;
-justify-content:center;
-gap:12px;
-flex-wrap:wrap;
-margin:30px auto;
-max-width:400px;
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+
 }
 
+
 .card{
-width:80px;
-height:110px;
-background:#252b50;
-border-radius:12px;
+
+height:130px;
+perspective:800px;
+cursor:pointer;
+
+}
+
+
+.inner{
+
+position:relative;
+width:100%;
+height:100%;
+
+transition:.6s;
+transform-style:preserve-3d;
+
+}
+
+
+.card.flip .inner{
+
+transform:rotateY(180deg);
+
+}
+
+
+.front,
+.back{
+
+position:absolute;
+width:100%;
+height:100%;
+
+backface-visibility:hidden;
+
+border-radius:15px;
+
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:35px;
-cursor:pointer;
+
+font-size:45px;
+
 }
 
-.card:hover{
-background:#00eaff;
-color:black;
+
+.front{
+
+background:
+linear-gradient(135deg,#10162d,#263056);
+
+border:2px solid #00eaff;
+
 }
+
+
+.back{
+
+background:white;
+color:black;
+
+transform:rotateY(180deg);
+
+}
+
 
 button{
+
 background:#00eaff;
-border:none;
+border:0;
 padding:15px 35px;
-border-radius:25px;
-font-size:18px;
+border-radius:15px;
+font-size:17px;
 font-weight:bold;
+
 }
 
+
 .result{
-margin-top:20px;
+
 font-size:22px;
 color:#00eaff;
+
+}
+
+
+@media(max-width:450px){
+
+.card{
+height:100px;
+}
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 🃏 PlayVerse Cards
 </header>
 
-<h2>Hard Card Challenge</h2>
 
-<p>Find the winning card. Wrong choice = Fail.</p>
+
+<div class="game">
+
+
+<div class="panel">
+
+<h2>
+Professional Card Challenge
+</h2>
+
+<p>
+Find the winning card. Wrong choice ends the round.
+</p>
+
+</div>
+
+
+
+<div class="panel table">
 
 
 <div class="cards" id="cards"></div>
 
 
-<button onclick="startGame()">
-NEW GAME
+</div>
+
+
+
+<div class="panel">
+
+
+<button onclick="newRound()">
+NEW ROUND
 </button>
 
 
@@ -92,61 +225,92 @@ Choose a card
 </div>
 
 
+</div>
+
+
+</div>
+
+
 
 <script>
 
-let winner;
+
+let winningCard;
 
 
-function startGame(){
+function newRound(){
+
 
 let box=document.getElementById("cards");
 
 box.innerHTML="";
 
 
-winner=Math.floor(Math.random()*8);
+document.getElementById("result").innerHTML=
+"Choose your card";
 
 
-for(let i=0;i<8;i++){
+winningCard=Math.floor(Math.random()*9);
+
+
+
+for(let i=0;i<9;i++){
+
 
 let card=document.createElement("div");
 
 card.className="card";
 
-card.innerHTML="🂠";
+
+card.innerHTML=`
+
+<div class="inner">
+
+<div class="front">
+🂠
+</div>
+
+<div class="back">
+${i===winningCard?"🏆":"❌"}
+</div>
+
+</div>
+
+`;
 
 
 card.onclick=function(){
 
-if(i===winner){
 
-card.innerHTML="🏆";
+card.classList.add("flip");
+
+
+if(i===winningCard){
 
 document.getElementById("result").innerHTML=
-"🏆 You Win!";
+"🏆 You found the winning card!";
 
 }else{
 
-card.innerHTML="❌";
-
 document.getElementById("result").innerHTML=
-"❌ Wrong Card. You Lose.";
+"❌ Wrong card. Round lost.";
 
 }
+
 
 };
 
 
 box.appendChild(card);
 
+
+}
+
+
 }
 
 
-document.getElementById("result").innerHTML=
-"Choose your card";
-
-}
+newRound();
 
 
 </script>

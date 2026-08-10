@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PlayVerse Dice</title>
+
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#080b18;
+color:white;
+min-height:100vh;
+}
+
+header{
+background:#11162b;
+padding:20px;
+text-align:center;
+border-bottom:1px solid #252b50;
+}
+
+.logo{
+font-size:26px;
+font-weight:bold;
+color:#00eaff;
+}
+
+.container{
+padding:20px;
+text-align:center;
+}
+
+h1{
+margin-bottom:10px;
+}
+
+p{
+color:#aaa;
+margin-bottom:25px;
+}
+
+.stats{
+display:flex;
+justify-content:space-around;
+margin-bottom:30px;
+}
+
+.box{
+background:#151b35;
+padding:15px;
+border-radius:12px;
+width:30%;
+}
+
+.dice{
+width:150px;
+height:150px;
+background:#fff;
+color:#000;
+border-radius:20px;
+margin:30px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:70px;
+font-weight:bold;
+}
+
+button{
+background:#00eaff;
+border:none;
+padding:15px 35px;
+border-radius:25px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+margin-top:20px;
+font-size:22px;
+color:#00eaff;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">🎮 PlayVerse Games</div>
+</header>
+
+<div class="container">
+
+<h1>🎲 Dice Challenge</h1>
+
+<p>Roll the dice and try to get the highest number.</p>
+
+
+<div class="stats">
+
+<div class="box">
+Rolls
+<br>
+<b id="rolls">0</b>
+</div>
+
+<div class="box">
+Score
+<br>
+<b id="score">0</b>
+</div>
+
+<div class="box">
+Best
+<br>
+<b id="best">0</b>
+</div>
+
+</div>
+
+
+<div class="dice" id="dice">
+🎲
+</div>
+
+
+<button onclick="rollDice()">
+Roll Dice
+</button>
+
+
+<div class="result" id="result">
+Ready?
+</div>
+
+
+</div>
+
+
+<script>
+
+let rolls=0;
+let score=0;
+let best=0;
+
+
+function rollDice(){
+
+let number=Math.floor(Math.random()*6)+1;
+
+rolls++;
+
+document.getElementById("dice").innerHTML=number;
+
+document.getElementById("rolls").innerHTML=rolls;
+
+
+if(number>=4){
+
+score+=10;
+
+document.getElementById("result").innerHTML="Great Roll! 🎉";
+
+}else{
+
+document.getElementById("result").innerHTML="Try Again 🎲";
+
+}
+
+
+if(score>best){
+
+best=score;
+
+}
+
+
+document.getElementById("score").innerHTML=score;
+
+document.getElementById("best").innerHTML=best;
+
+}
+
+</script>
+
+</body>
+</html>

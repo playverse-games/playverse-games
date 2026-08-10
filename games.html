@@ -8,231 +8,146 @@
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#080b18;
-    color:#fff;
-    min-height:100vh;
+background:#080b18;
+color:white;
+min-height:100vh;
 }
 
 header{
-    background:#11162b;
-    border-bottom:1px solid #252b50;
-    padding:16px 20px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:sticky;
-    top:0;
-    z-index:10;
+background:#11162b;
+padding:18px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #252b50;
 }
 
 .logo{
-    color:#00eaff;
-    font-size:23px;
-    font-weight:bold;
+font-size:24px;
+font-weight:bold;
+color:#00eaff;
 }
 
-.menu{
-    display:flex;
-    gap:8px;
+nav a{
+color:#aaa;
+text-decoration:none;
+margin-left:12px;
+font-size:14px;
 }
 
-.menu a{
-    color:#aaa;
-    text-decoration:none;
-    font-size:13px;
-    padding:8px 10px;
-    border-radius:8px;
-}
-
-.menu a:hover,
-.menu a.active{
-    background:#1b2342;
-    color:#00eaff;
+nav a:hover{
+color:#00eaff;
 }
 
 .container{
-    width:100%;
-    max-width:1100px;
-    margin:auto;
-    padding:25px 18px 40px;
+max-width:1100px;
+margin:auto;
+padding:25px 15px;
 }
 
 .hero{
-    text-align:center;
-    margin-bottom:28px;
+text-align:center;
+margin-bottom:30px;
 }
 
 .hero h1{
-    font-size:30px;
-    margin-bottom:8px;
+font-size:30px;
+margin-bottom:10px;
 }
 
 .hero p{
-    color:#9da3bb;
-    line-height:1.5;
-}
-
-.section-title{
-    margin:25px 0 15px;
-    font-size:20px;
+color:#aaa;
 }
 
 .games{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
 }
 
 .game{
-    background:#11162b;
-    border:1px solid #252b50;
-    border-radius:16px;
-    padding:20px 14px;
-    text-align:center;
-    text-decoration:none;
-    color:white;
-    transition:.2s;
-    min-height:165px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+background:#11162b;
+border:1px solid #252b50;
+border-radius:16px;
+padding:20px;
+text-align:center;
+text-decoration:none;
+color:white;
+transition:.3s;
 }
 
 .game:hover{
-    transform:translateY(-3px);
-    border-color:#00eaff;
-    background:#151c36;
+border-color:#00eaff;
+transform:translateY(-5px);
 }
 
 .icon{
-    font-size:45px;
-    margin-bottom:12px;
+font-size:45px;
+margin-bottom:10px;
 }
 
 .game h3{
-    font-size:17px;
-    margin-bottom:7px;
+margin-bottom:8px;
 }
 
 .game p{
-    color:#8e95ad;
-    font-size:13px;
-    line-height:1.4;
+color:#aaa;
+font-size:14px;
 }
 
 .play{
-    display:inline-block;
-    margin-top:12px;
-    color:#00eaff;
-    font-size:13px;
-    font-weight:bold;
+display:block;
+margin-top:12px;
+color:#00eaff;
+font-weight:bold;
 }
 
 .trading{
-    margin-top:30px;
-    background:linear-gradient(135deg,#101a35,#151b35);
-    border:1px solid #00eaff;
-    border-radius:18px;
-    padding:22px;
-    text-align:center;
+margin-top:35px;
+background:#11162b;
+border:1px solid #00eaff;
+border-radius:16px;
+padding:25px;
+text-align:center;
 }
 
-.trading .icon{
-    margin-bottom:8px;
-}
-
-.trading h2{
-    margin-bottom:8px;
-}
-
-.trading p{
-    color:#a6acc0;
-    margin-bottom:16px;
-    line-height:1.5;
-}
-
-.trading-btn{
-    display:inline-block;
-    background:#00eaff;
-    color:#000;
-    text-decoration:none;
-    padding:13px 25px;
-    border-radius:25px;
-    font-weight:bold;
+.trading a{
+display:inline-block;
+margin-top:15px;
+background:#00eaff;
+color:black;
+padding:12px 25px;
+border-radius:25px;
+font-weight:bold;
+text-decoration:none;
 }
 
 footer{
-    text-align:center;
-    padding:25px 15px;
-    color:#666d85;
-    font-size:13px;
-    border-top:1px solid #171d34;
-    margin-top:20px;
+text-align:center;
+padding:25px;
+color:#777;
 }
 
 @media(max-width:700px){
-    header{
-        padding:14px;
-    }
-
-    .logo{
-        font-size:20px;
-    }
-
-    .menu a{
-        font-size:12px;
-        padding:7px;
-    }
-
-    .container{
-        padding:22px 14px 35px;
-    }
-
-    .hero h1{
-        font-size:26px;
-    }
-
-    .games{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
-
-    .game{
-        min-height:155px;
-        padding:17px 10px;
-    }
-
-    .icon{
-        font-size:38px;
-    }
+.games{
+grid-template-columns:repeat(2,1fr);
+}
 }
 
-@media(max-width:390px){
-    .games{
-        grid-template-columns:1fr;
-    }
-
-    .game{
-        min-height:135px;
-    }
-
-    .menu{
-        gap:2px;
-    }
-
-    .menu a{
-        font-size:11px;
-        padding:6px;
-    }
+@media(max-width:400px){
+.games{
+grid-template-columns:1fr;
+}
 }
 </style>
+
 </head>
 
 <body>
@@ -241,131 +156,111 @@ footer{
 
 <div class="logo">🎮 PlayVerse</div>
 
-<nav class="menu">
+<nav>
 <a href="index.html">Home</a>
-<a href="games.html" class="active">Games</a>
-<a href="tournament.html">Tournaments</a>
+<a href="games.html">Games</a>
+<a href="tournament.html">Tournament</a>
 <a href="account.html">Account</a>
 </nav>
 
 </header>
 
 
-<main class="container">
+<div class="container">
 
-<section class="hero">
-
+<div class="hero">
 <h1>🎮 PlayVerse Games</h1>
-
-<p>
-Choose a game, play for fun, improve your score,
-and compete on the PlayVerse leaderboard.
-</p>
-
-</section>
+<p>Choose a challenge and compete.</p>
+</div>
 
 
-<h2 class="section-title">🔥 All Games</h2>
-
-
-<section class="games">
+<div class="games">
 
 <a class="game" href="aviator.html">
 <div class="icon">✈️</div>
 <h3>Aviator</h3>
-<p>Watch the multiplier rise and make your move.</p>
+<p>Prediction flight challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="crash.html">
 <div class="icon">💥</div>
 <h3>Crash</h3>
-<p>Follow the multiplier and try to beat the crash.</p>
+<p>Risk and timing challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="target.html">
 <div class="icon">🎯</div>
 <h3>Target</h3>
-<p>Test your accuracy and hit the target.</p>
+<p>Accuracy challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="spin.html">
 <div class="icon">🎡</div>
 <h3>Spin</h3>
-<p>Spin the wheel and see where it lands.</p>
+<p>Spin challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="memory.html">
 <div class="icon">🧠</div>
 <h3>Memory</h3>
-<p>Match the cards and challenge your memory.</p>
+<p>Test your memory.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="cards.html">
 <div class="icon">🃏</div>
 <h3>Cards</h3>
-<p>Choose a card and test your luck.</p>
+<p>Card challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="dice.html">
 <div class="icon">🎲</div>
 <h3>Dice</h3>
-<p>Roll the dice and chase your highest score.</p>
+<p>Dice challenge.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="racing.html">
 <div class="icon">🏎️</div>
 <h3>Racing</h3>
-<p>Race to the finish and aim for the win.</p>
+<p>Race against opponents.</p>
 <span class="play">PLAY →</span>
 </a>
-
 
 <a class="game" href="basketball.html">
 <div class="icon">🏀</div>
 <h3>Basketball</h3>
-<p>Shoot the ball and build your highest score.</p>
+<p>Shooting challenge.</p>
 <span class="play">PLAY →</span>
 </a>
 
-</section>
+</div>
 
 
-<section class="trading">
+<div class="trading">
 
-<div class="icon">📈</div>
-
-<h2>Trading Prediction</h2>
+<h2>📈 Trading Prediction</h2>
 
 <p>
-Make market predictions, follow price movements,
-and compete with other players.
+Predict market movement and compete.
 </p>
 
-<a class="trading-btn" href="trading.html">
+<a href="trading.html">
 OPEN TRADING →
 </a>
 
-</section>
+</div>
 
-</main>
+</div>
 
 
 <footer>
-© 2026 PlayVerse Games. All rights reserved.
+© 2026 PlayVerse Games
 </footer>
 
 </body>

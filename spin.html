@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>PlayVerse Games - Spin</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0a0a0a;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    background:#101010;
+    border-bottom:1px solid #222;
+    padding:15px 18px;
+}
+
+.header-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#00ff88;
+    font-size:23px;
+    font-weight:800;
+}
+
+.account{
+    color:#fff;
+    text-decoration:none;
+    background:#191919;
+    border:1px solid #292929;
+    padding:9px 13px;
+    border-radius:9px;
+    font-size:13px;
+}
+
+nav{
+    background:#111;
+    border-bottom:1px solid #222;
+    overflow-x:auto;
+    white-space:nowrap;
+}
+
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    padding:13px 17px;
+    font-size:13px;
+}
+
+nav a.active,
+nav a:hover{
+    color:#00ff88;
+}
+
+.container{
+    max-width:850px;
+    margin:auto;
+    padding:18px;
+}
+
+.back{
+    display:inline-block;
+    color:#aaa;
+    text-decoration:none;
+    margin:5px 0 15px;
+    font-size:14px;
+}
+
+.back:hover{color:#00ff88}
+
+.game-card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.game-header{
+    padding:18px;
+    border-bottom:1px solid #242424;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.game-title{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.game-icon{
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    background:#1a1a1a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+}
+
+.game-title h1{font-size:20px}
+
+.game-title p{
+    color:#777;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.demo{
+    color:#00ff88;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.balance{
+    margin:15px 18px 0;
+    padding:13px;
+    background:#171717;
+    border-radius:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.balance span{
+    color:#888;
+    font-size:12px;
+}
+
+.balance strong{
+    color:#00ff88;
+    font-size:17px;
+}
+
+.locked{
+    color:#ffc857;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.spin-area{
+    padding:25px 18px 18px;
+    text-align:center;
+}
+
+.wheel-wrap{
+    width:min(330px,82vw);
+    height:min(330px,82vw);
+    margin:0 auto 25px;
+    position:relative;
+}
+
+.pointer{
+    position:absolute;
+    top:-8px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    width:0;
+    height:0;
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:34px solid #00ff88;
+    filter:drop-shadow(0 2px 5px #000);
+}
+
+.wheel{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:8px solid #292929;
+    position:relative;
+    overflow:hidden;
+    background:
+        conic-gradient(
+            #00ff88 0deg 45deg,
+            #191919 45deg 90deg,
+            #00ff88 90deg 135deg,
+            #191919 135deg 180deg,
+            #00ff88 180deg 225deg,
+            #191919 225deg 270deg,
+            #00ff88 270deg 315deg,
+            #191919 315deg 360deg
+        );
+    box-shadow:
+        0 0 0 5px #111,
+        0 15px 35px rgba(0,0,0,.45);
+    transition:transform 4s cubic-bezier(.12,.75,.12,1);
+}
+
+.wheel::after{
+    content:"";
+    position:absolute;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#101010;
+    border:5px solid #00ff88;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.wheel-labels{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.label{
+    position:absolute;
+    font-weight:900;
+    font-size:18px;
+    color:#fff;
+    transform:translate(-50%,-50%);
+    text-shadow:0 2px 4px #000;
+}
+
+.l1{left:73%;top:28%}
+.l2{left:73%;top:72%}
+.l3{left:27%;top:72%}
+.l4{left:27%;top:28%}
+.l5{left:50%;top:13%}
+.l6{left:87%;top:50%}
+.l7{left:50%;top:87%}
+.l8{left:13%;top:50%}
+
+.spin-button{
+    width:100%;
+    max-width:400px;
+    padding:15px;
+    border:0;
+    border-radius:11px;
+    background:#00ff88;
+    color:#06100b;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.spin-button:disabled{
+    background:#333;
+    color:#777;
+    cursor:not-allowed;
+}
+
+.result{
+    min-height:30px;
+    margin-top:15px;
+    font-size:18px;
+    font-weight:800;
+    color:#00ff88;
+}
+
+.message{
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    background:#17120b;
+    border:1px solid #4d3b19;
+    color:#ffc857;
+    font-size:12px;
+    line-height:1.5;
+    text-align:left;
+}
+
+.section{
+    margin-top:16px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    padding:18px;
+}
+
+.section h2{
+    font-size:17px;
+    margin-bottom:13px;
+}
+
+.history-row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-bottom:1px solid #222;
+    font-size:13px;
+}
+
+.history-row:last-child{
+    border-bottom:0;
+}
+
+.history-row span{color:#777}
+
+.notice{
+    margin-top:15px;
+    color:#666;
+    font-size:11px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:28px;
+    padding:24px;
+    text-align:center;
+    border-top:1px solid #222;
+    background:#101010;
+    color:#777;
+    font-size:12px;
+}
+
+@media(max-width:420px){
+    .wheel-wrap{
+        width:285px;
+        height:285px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">PLAYVERSE</div>
+        <a href="account.html" class="account">Account</a>
+    </div>
+</header>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html">Home</a>
+        <a href="games.html" class="active">Games</a>
+        <a href="trading.html">Prediction</a>
+        <a href="tournament.html">Tournaments</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<main class="container">
+
+<a href="games.html" class="back">← Back to Games</a>
+
+<section class="game-card">
+
+    <div class="game-header">
+
+        <div class="game-title">
+            <div class="game-icon">🎡</div>
+
+            <div>
+                <h1>Lucky Spin</h1>
+                <p>Spin the wheel</p>
+            </div>
+        </div>
+
+        <div class="demo">DEMO MODE</div>
+
+    </div>
+
+
+    <div class="balance">
+
+        <div>
+            <span>Demo Balance</span>
+            <div class="locked">PAYMENT NOT CONFIRMED</div>
+        </div>
+
+        <strong>$0.00</strong>
+
+    </div>
+
+
+    <div class="spin-area">
+
+        <div class="wheel-wrap">
+
+            <div class="pointer"></div>
+
+            <div class="wheel" id="wheel">
+
+                <div class="wheel-labels">
+                    <span class="label l1">2x</span>
+                    <span class="label l2">5x</span>
+                    <span class="label l3">1x</span>
+                    <span class="label l4">10x</span>
+                    <span class="label l5">3x</span>
+                    <span class="label l6">1x</span>
+                    <span class="label l7">5x</span>
+                    <span class="label l8">2x</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="spin-button"
+            id="spinButton"
+            onclick="spin()"
+        >
+            SPIN
+        </button>
+
+
+        <div
+            class="result"
+            id="result"
+        >
+        </div>
+
+
+        <div class="message">
+            <strong>PAYMENT NOT CONFIRMED</strong><br>
+            This is visual demo gameplay. No money is
+            deducted or credited from your account.
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <h2>📋 Spin History</h2>
+
+    <div id="history">
+
+        <div class="history-row">
+            <span>No spins yet</span>
+            <span>—</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<p class="notice">
+    Demo gameplay only. Real balances, tournament results,
+    payments and withdrawals must be controlled by a secure
+    backend.
+</p>
+
+</main>
+
+
+<footer>
+    PlayVerse Games © 2026
+</footer>
+
+
+<script>
+"use strict";
+
+const wheel =
+    document.getElementById("wheel");
+
+const spinButton =
+    document.getElementById("spinButton");
+
+const result =
+    document.getElementById("result");
+
+const history =
+    document.getElementById("history");
+
+
+let rotation = 0;
+let spinning = false;
+let spinNumber = 0;
+
+
+/*
+    Demo-only wheel.
+
+    The result is local visual gameplay and does not
+    change the player's real or tournament balance.
+*/
+
+
+const prizes = [
+    "2x",
+    "5x",
+    "1x",
+    "10x",
+    "3x",
+    "1x",
+    "5x",
+    "2x"
+];
+
+
+function spin(){
+
+    if(spinning){
+        return;
+    }
+
+    spinning = true;
+
+    spinButton.disabled =
+        true;
+
+    result.textContent =
+        "Spinning...";
+
+
+    /*
+      Pick a visual result.
+    */
+
+    const index =
+        Math.floor(
+            Math.random() *
+            prizes.length
+        );
+
+
+    /*
+      Each section is 45 degrees.
+
+      Add several complete rotations
+      for a smooth spin.
+    */
+
+    const sectionAngle =
+        360 / prizes.length;
+
+    const targetAngle =
+        index * sectionAngle;
+
+    const extra =
+        360 * (
+            5 +
+            Math.floor(
+                Math.random() * 3
+            )
+        );
+
+
+    /*
+      Pointer is at the top.
+
+      Rotate so the selected section
+      finishes under the pointer.
+    */
+
+    const finalRotation =
+        rotation +
+        extra +
+        (360 - targetAngle);
+
+
+    rotation =
+        finalRotation;
+
+
+    wheel.style.transform =
+        "rotate(" +
+        finalRotation +
+        "deg)";
+
+
+    setTimeout(
+        function(){
+
+            const prize =
+                prizes[index];
+
+            result.textContent =
+                "🎉 Result: " +
+                prize;
+
+
+            spinNumber++;
+
+            addHistory(
+                prize
+            );
+
+
+            spinning = false;
+
+            spinButton.disabled =
+                false;
+
+        },
+        4100
+    );
+
+}
+
+
+function addHistory(prize){
+
+    const empty =
+        history.querySelector(
+            ".history-row"
+        );
+
+
+    if(
+        empty &&
+        empty.textContent.includes(
+            "No spins yet"
+        )
+    ){
+        history.innerHTML = "";
+    }
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        "history-row";
+
+
+    const time =
+        new Date().toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    row.innerHTML =
+        "<span>Spin #" +
+        spinNumber +
+        " • " +
+        time +
+        "</span>" +
+        "<strong>" +
+        prize +
+        "</strong>";
+
+
+    history.prepend(
+        row
+    );
+
+
+    while(
+        history.children.length > 10
+    ){
+        history.removeChild(
+            history.lastElementChild
+        );
+    }
+
+}
+
+</script>
+
+</body>
+</html>

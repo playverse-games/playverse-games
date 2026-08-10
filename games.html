@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
 
 <title>PlayVerse Games</title>
 
@@ -12,178 +11,225 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#0a0a0a;
+    background:#080b18;
     color:#fff;
     min-height:100vh;
 }
 
 header{
-    background:#101010;
-    border-bottom:1px solid #222;
+    background:#11162b;
+    border-bottom:1px solid #252b50;
     padding:16px 20px;
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-
-.header-inner{
-    max-width:1200px;
-    margin:auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
 .logo{
-    color:#00ff88;
-    font-size:24px;
-    font-weight:800;
+    color:#00eaff;
+    font-size:23px;
+    font-weight:bold;
 }
 
-.account{
-    color:#fff;
-    text-decoration:none;
-    background:#191919;
-    border:1px solid #292929;
-    padding:9px 14px;
-    border-radius:9px;
-    font-size:14px;
-}
-
-nav{
-    background:#111;
-    border-bottom:1px solid #222;
-    overflow-x:auto;
-    white-space:nowrap;
-}
-
-.nav-inner{
-    max-width:1200px;
-    margin:auto;
+.menu{
     display:flex;
+    gap:8px;
 }
 
-nav a{
+.menu a{
     color:#aaa;
     text-decoration:none;
-    padding:14px 18px;
-    font-size:14px;
+    font-size:13px;
+    padding:8px 10px;
+    border-radius:8px;
 }
 
-nav a:hover,
-nav a.active{
-    color:#00ff88;
+.menu a:hover,
+.menu a.active{
+    background:#1b2342;
+    color:#00eaff;
 }
 
 .container{
-    max-width:1200px;
+    width:100%;
+    max-width:1100px;
     margin:auto;
-    padding:20px;
+    padding:25px 18px 40px;
 }
 
-.page-title{
-    margin:10px 0 22px;
+.hero{
+    text-align:center;
+    margin-bottom:28px;
 }
 
-.page-title h1{
+.hero h1{
     font-size:30px;
     margin-bottom:8px;
 }
 
-.page-title p{
-    color:#888;
+.hero p{
+    color:#9da3bb;
     line-height:1.5;
+}
+
+.section-title{
+    margin:25px 0 15px;
+    font-size:20px;
 }
 
 .games{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:16px;
+    gap:14px;
 }
 
 .game{
-    background:#121212;
-    border:1px solid #242424;
-    border-radius:18px;
-    padding:20px;
+    background:#11162b;
+    border:1px solid #252b50;
+    border-radius:16px;
+    padding:20px 14px;
+    text-align:center;
+    text-decoration:none;
+    color:white;
     transition:.2s;
+    min-height:165px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 .game:hover{
-    border-color:#00ff88;
-    transform:translateY(-2px);
+    transform:translateY(-3px);
+    border-color:#00eaff;
+    background:#151c36;
 }
 
 .icon{
-    width:62px;
-    height:62px;
-    border-radius:16px;
-    background:#1c1c1c;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:31px;
-    margin-bottom:15px;
+    font-size:45px;
+    margin-bottom:12px;
 }
 
-.game h2{
-    font-size:19px;
+.game h3{
+    font-size:17px;
     margin-bottom:7px;
 }
 
 .game p{
-    color:#888;
+    color:#8e95ad;
     font-size:13px;
-    line-height:1.5;
-    min-height:40px;
+    line-height:1.4;
 }
 
 .play{
-    display:block;
-    margin-top:17px;
-    padding:12px;
-    text-align:center;
-    text-decoration:none;
-    background:#00ff88;
-    color:#06100b;
-    border-radius:9px;
+    display:inline-block;
+    margin-top:12px;
+    color:#00eaff;
+    font-size:13px;
     font-weight:bold;
 }
 
-.demo{
-    margin-top:25px;
-    background:#111;
-    border:1px solid #242424;
-    border-radius:15px;
-    padding:17px;
-    color:#888;
-    font-size:13px;
+.trading{
+    margin-top:30px;
+    background:linear-gradient(135deg,#101a35,#151b35);
+    border:1px solid #00eaff;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
+}
+
+.trading .icon{
+    margin-bottom:8px;
+}
+
+.trading h2{
+    margin-bottom:8px;
+}
+
+.trading p{
+    color:#a6acc0;
+    margin-bottom:16px;
     line-height:1.5;
 }
 
-footer{
-    margin-top:30px;
-    padding:25px;
-    text-align:center;
-    border-top:1px solid #222;
-    background:#101010;
-    color:#777;
-    font-size:13px;
+.trading-btn{
+    display:inline-block;
+    background:#00eaff;
+    color:#000;
+    text-decoration:none;
+    padding:13px 25px;
+    border-radius:25px;
+    font-weight:bold;
 }
 
-@media(max-width:800px){
+footer{
+    text-align:center;
+    padding:25px 15px;
+    color:#666d85;
+    font-size:13px;
+    border-top:1px solid #171d34;
+    margin-top:20px;
+}
+
+@media(max-width:700px){
+    header{
+        padding:14px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .menu a{
+        font-size:12px;
+        padding:7px;
+    }
+
+    .container{
+        padding:22px 14px 35px;
+    }
+
+    .hero h1{
+        font-size:26px;
+    }
+
     .games{
         grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .game{
+        min-height:155px;
+        padding:17px 10px;
+    }
+
+    .icon{
+        font-size:38px;
     }
 }
 
-@media(max-width:520px){
+@media(max-width:390px){
     .games{
         grid-template-columns:1fr;
+    }
+
+    .game{
+        min-height:135px;
+    }
+
+    .menu{
+        gap:2px;
+    }
+
+    .menu a{
+        font-size:11px;
+        padding:6px;
     }
 }
 </style>
@@ -192,110 +238,134 @@ footer{
 <body>
 
 <header>
-    <div class="header-inner">
-        <div class="logo">PLAYVERSE</div>
-        <a href="account.html" class="account">Account</a>
-    </div>
+
+<div class="logo">🎮 PlayVerse</div>
+
+<nav class="menu">
+<a href="index.html">Home</a>
+<a href="games.html" class="active">Games</a>
+<a href="tournament.html">Tournaments</a>
+<a href="account.html">Account</a>
+</nav>
+
 </header>
 
-<nav>
-    <div class="nav-inner">
-        <a href="index.html">Home</a>
-        <a href="games.html" class="active">Games</a>
-        <a href="trading.html">Prediction</a>
-        <a href="tournament.html">Tournaments</a>
-        <a href="leaderboard.html">Leaderboard</a>
-        <a href="account.html">Account</a>
-    </div>
-</nav>
 
 <main class="container">
 
-    <section class="page-title">
-        <h1>🎮 Games</h1>
-        <p>
-            Choose a game and compete using your tournament demo balance.
-        </p>
-    </section>
+<section class="hero">
 
-    <section class="games">
+<h1>🎮 PlayVerse Games</h1>
 
-        <article class="game">
-            <div class="icon">✈️</div>
-            <h2>Aviator</h2>
-            <p>Watch the plane fly and test your timing.</p>
-            <a href="aviator.html" class="play">PLAY</a>
-        </article>
+<p>
+Choose a game, play for fun, improve your score,
+and compete on the PlayVerse leaderboard.
+</p>
 
-        <article class="game">
-            <div class="icon">🎯</div>
-            <h2>Target</h2>
-            <p>Hit the target and compete for a higher score.</p>
-            <a href="target.html" class="play">PLAY</a>
-        </article>
+</section>
 
-        <article class="game">
-            <div class="icon">🎲</div>
-            <h2>Dice</h2>
-            <p>A quick demo dice competition.</p>
-            <a href="dice.html" class="play">PLAY</a>
-        </article>
 
-        <article class="game">
-            <div class="icon">🏎️</div>
-            <h2>Racing</h2>
-            <p>Race through a fast competitive challenge.</p>
-            <a href="racing.html" class="play">PLAY</a>
-        </article>
+<h2 class="section-title">🔥 All Games</h2>
 
-        <article class="game">
-            <div class="icon">🃏</div>
-            <h2>Cards</h2>
-            <p>Play a quick card-based demo game.</p>
-            <a href="cards.html" class="play">PLAY</a>
-        </article>
 
-        <article class="game">
-            <div class="icon">⚡</div>
-            <h2>Quick Win</h2>
-            <p>A simple fast-paced competitive challenge.</p>
-            <a href="quick-win.html" class="play">PLAY</a>
-        </article>
+<section class="games">
 
-        <article class="game">
-            <div class="icon">🏆</div>
-            <h2>Challenge</h2>
-            <p>Complete challenges and improve your score.</p>
-            <a href="challenge.html" class="play">PLAY</a>
-        </article>
+<a class="game" href="aviator.html">
+<div class="icon">✈️</div>
+<h3>Aviator</h3>
+<p>Watch the multiplier rise and make your move.</p>
+<span class="play">PLAY →</span>
+</a>
 
-        <article class="game">
-            <div class="icon">🚀</div>
-            <h2>Rocket</h2>
-            <p>A fast demo multiplier-style game.</p>
-            <a href="rocket.html" class="play">PLAY</a>
-        </article>
 
-        <article class="game">
-            <div class="icon">🎮</div>
-            <h2>Arcade</h2>
-            <p>A collection of quick competitive challenges.</p>
-            <a href="arcade.html" class="play">PLAY</a>
-        </article>
+<a class="game" href="crash.html">
+<div class="icon">💥</div>
+<h3>Crash</h3>
+<p>Follow the multiplier and try to beat the crash.</p>
+<span class="play">PLAY →</span>
+</a>
 
-    </section>
 
-    <section class="demo">
-        <strong>Demo gameplay</strong><br><br>
-        These games use demo credits. Real-money entry and prize
-        functionality should only be activated through an approved
-        payment provider and secure backend.
-    </section>
+<a class="game" href="target.html">
+<div class="icon">🎯</div>
+<h3>Target</h3>
+<p>Test your accuracy and hit the target.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="spin.html">
+<div class="icon">🎡</div>
+<h3>Spin</h3>
+<p>Spin the wheel and see where it lands.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="memory.html">
+<div class="icon">🧠</div>
+<h3>Memory</h3>
+<p>Match the cards and challenge your memory.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="cards.html">
+<div class="icon">🃏</div>
+<h3>Cards</h3>
+<p>Choose a card and test your luck.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="dice.html">
+<div class="icon">🎲</div>
+<h3>Dice</h3>
+<p>Roll the dice and chase your highest score.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="racing.html">
+<div class="icon">🏎️</div>
+<h3>Racing</h3>
+<p>Race to the finish and aim for the win.</p>
+<span class="play">PLAY →</span>
+</a>
+
+
+<a class="game" href="basketball.html">
+<div class="icon">🏀</div>
+<h3>Basketball</h3>
+<p>Shoot the ball and build your highest score.</p>
+<span class="play">PLAY →</span>
+</a>
+
+</section>
+
+
+<section class="trading">
+
+<div class="icon">📈</div>
+
+<h2>Trading Prediction</h2>
+
+<p>
+Make market predictions, follow price movements,
+and compete with other players.
+</p>
+
+<a class="trading-btn" href="trading.html">
+OPEN TRADING →
+</a>
+
+</section>
 
 </main>
 
+
 <footer>
-    PlayVerse Games © 2026
+© 2026 PlayVerse Games. All rights reserved.
 </footer>
 
 </body>
